@@ -1,19 +1,55 @@
 from loguru import logger
-from utils.func import get_accounts_data, shuffle
-import sys
-import time
 from utils.func import sleeping
-from web3 import Web3
 from settings import *
-from utils.off_bridge import ZoraBridge
 from utils.merkly import Merkly
 from utils.zerius import Zerius
 from utils.mint_nft import MintNFT
 from utils.wallet import Wallet
+from web3 import Web3
 import random
+import time
+
+web3_eth = Web3(Web3.HTTPProvider('https://rpc.ankr.com/eth', request_kwargs={'timeout': 60}))
+
+chain_list = {
+    'zora': Zora,
+    'base': Base,
+    'oeth': Optimism
+}
 
 
 class CustomRouter:
+
+    @staticmethod
+    def chek_gas_eth():
+        while True:
+            try:
+                res = int(round(Web3.from_wei(web3_eth.eth.gas_price, 'gwei')))
+                logger.info(f'Газ сейчас - {res} gwei\n')
+                if res <= MAX_GAS_ETH:
+                    break
+                else:
+                    time.sleep(60)
+                    continue
+            except Exception as error:
+                logger.error(error)
+                time.sleep(30)
+                continue
+
+    @staticmethod
+    def get_chain_and_address():
+        url = random.choice(URL_CUSTOM_NFT)
+        if url.startswith('https://'):
+            url = url[8:]
+        if url.startswith('zora.co/collect/'):
+            url = url[16:]
+        chain, nft_info = tuple(url.split(':'))
+        if '/' in nft_info:
+            nft_address, token_id = tuple(nft_info.split('/'))
+        else:
+            nft_address, token_id = nft_info, 1
+
+        return chain_list[chain], nft_address, token_id
 
     def __init__(self, private_key, str_number, proxy, address_metadata, address_wallet):
         self.private_key = private_key
@@ -37,28 +73,53 @@ class CustomRouter:
         nft_id = zer.get_nft_id()
         zer.bridge_nft(nft_id)
 
-    def mint_zorb(self):
-        zora = MintNFT(self.private_key, self.str_number, self.proxy)
-        zora.mint_zorb()
+    def mint_zorb_zora(self):
+        zora = MintNFT(self.private_key, Zora, self.str_number, self.proxy)
+        zora.mint_zorb_zora()
 
-    def mint_opensea_zorb(self):
+    def mint_zorb_base(self):
+        zora = MintNFT(self.private_key, Base, self.str_number, self.proxy)
+        zora.mint_zorb_base()
+
+    def mint_zorb_optimism(self):
+        zora = MintNFT(self.private_key, Optimism, self.str_number, self.proxy)
+        zora.mint_zorb_opt()
+
+    def mint_opensea_zorb_zora(self):
         number_trans = random.randint(NUMBER_TRANS_7[0], NUMBER_TRANS_7[1])
         logger.info(f'Number of transactions - {number_trans}\n')
-        zora = MintNFT(self.private_key, self.str_number, self.proxy)
-        zora.mint_opensea_zorb()
+        zora = MintNFT(self.private_key, Zora, self.str_number, self.proxy)
+        for _ in range(number_trans):
+            zora.mint_opensea_zorb_zora()
+            sleeping(TIME_DELAY[0], TIME_DELAY[1])
+
+    def mint_opensea_zorb_base(self):
+        number_trans = random.randint(NUMBER_TRANS_7[0], NUMBER_TRANS_7[1])
+        logger.info(f'Number of transactions - {number_trans}\n')
+        zora = MintNFT(self.private_key, Base, self.str_number, self.proxy)
+        for _ in range(number_trans):
+            zora.mint_opensea_zorb_base()
+            sleeping(TIME_DELAY[0], TIME_DELAY[1])
+
+    def mint_opensea_zorb_optimism(self):
+        number_trans = random.randint(NUMBER_TRANS_7[0], NUMBER_TRANS_7[1])
+        logger.info(f'Number of transactions - {number_trans}\n')
+        zora = MintNFT(self.private_key, Optimism, self.str_number, self.proxy)
+        for _ in range(number_trans):
+            zora.mint_opensea_zorb_opt()
+            sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
     def mint_custom_nft(self):
-        zora = MintNFT(self.private_key, self.str_number, self.proxy)
-        zora.mint_1155()
+        chain, add, id_nft = self.get_chain_and_address()
+        zora = MintNFT(self.private_key, chain, self.str_number, self.proxy)
+        zora.mint_1155(add, id_nft)
 
     def update_nft_metadata(self):
         if self.address_metadata is None:
             logger.error('Address NFT is empty\n')
             return
-        zora = MintNFT(self.private_key, self.str_number, self.proxy)
-        res = zora.update_metadata(self.address_metadata)
-        if res is False:
-            return
+        zora = MintNFT(self.private_key, Zora, self.str_number, self.proxy)
+        zora.update_metadata(self.address_metadata)
 
     def send_money_yourself(self):
         wal = Wallet(self.private_key, Zora, self.str_number, self.proxy)
@@ -67,5 +128,3 @@ class CustomRouter:
         for _ in range(number_trans):
             wal.transfer_native(self.address_wallet)
             sleeping(TIME_DELAY[0], TIME_DELAY[1])
-
-

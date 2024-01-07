@@ -7,7 +7,7 @@ from requests.adapters import Retry
 from utils.retry_wallet import exception_handler_wallet
 import requests
 from loguru import logger
-from settings import ZORA_GASPRICE_PRESCALE
+from settings import ZORA_GASPRICE_PRESCALE, BASE_GASPRICE_PRESCALE
 
 SCAN = {
     'Ethereum': 'https://etherscan.io/tx/',
@@ -92,7 +92,8 @@ class Wallet:
 
         if self.chain == 'Zora':
             return {'maxFeePerGas': int(self.web3.eth.gas_price * ZORA_GASPRICE_PRESCALE), 'maxPriorityFeePerGas': int(self.web3.eth.max_priority_fee * ZORA_GASPRICE_PRESCALE)}
-
+        elif self.chain == 'Base':
+            return {'maxFeePerGas': int(self.web3.eth.gas_price * BASE_GASPRICE_PRESCALE), 'maxPriorityFeePerGas': int(self.web3.eth.max_priority_fee * BASE_GASPRICE_PRESCALE)}
         return {'maxFeePerGas': self.web3.eth.gas_price, 'maxPriorityFeePerGas': self.web3.eth.max_priority_fee}
 
     @staticmethod

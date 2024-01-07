@@ -1,5 +1,4 @@
 import random
-
 from loguru import logger
 from utils.func import get_accounts_data, shuffle
 import sys
@@ -20,6 +19,12 @@ logger.remove()
 logger.add("./data/log.txt")
 logger.add(sys.stdout, format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <7}</level> | <cyan>{message}</cyan>")
 web3_eth = Web3(Web3.HTTPProvider('https://rpc.ankr.com/eth', request_kwargs={'timeout': 60}))
+
+chain_list = {
+    'zora': Zora,
+    'base': Base,
+    'oeth': Optimism
+}
 
 
 class Worker:
@@ -42,7 +47,24 @@ class Worker:
                 time.sleep(30)
                 continue
 
+    @staticmethod
+    def get_chain_and_address():
+        url = random.choice(URL_CUSTOM_NFT)
+        if url.startswith('https://'):
+            url = url[8:]
+        if url.startswith('zora.co/collect/'):
+            url = url[16:]
+        chain, nft_info = tuple(url.split(':'))
+        if '/' in nft_info:
+            nft_address, token_id = tuple(nft_info.split('/'))
+        else:
+            nft_address, token_id = nft_info, 1
+
+        return chain_list[chain], nft_address, token_id
+
     def work(self):
+
+        self.get_chain_and_address()
 
         i = 0
         wallet_info_list = []
@@ -76,32 +98,59 @@ class Worker:
                 zer.bridge_nft(nft_id)
 
             if self.action == 6:
-                zora = MintNFT(key, str_number, proxy)
-                zora.mint_zorb()
+                zora = MintNFT(key, Zora, str_number, proxy)
+                zora.mint_zorb_zora()
 
             if self.action == 7:
-                number_trans = random.randint(NUMBER_TRANS_7[0], NUMBER_TRANS_7[1])
-                logger.info(f'Number of transactions - {number_trans}\n')
-                zora = MintNFT(key, str_number, proxy)
-                for _ in range(number_trans):
-                    self.chek_gas_eth()
-                    zora.mint_opensea_zorb()
-                    sleeping(TIME_DELAY[0], TIME_DELAY[1])
+                zora = MintNFT(key, Base, str_number, proxy)
+                zora.mint_zorb_base()
 
             if self.action == 8:
-                zora = MintNFT(key, str_number, proxy)
-                zora.mint_1155()
+                zora = MintNFT(key, Optimism, str_number, proxy)
+                zora.mint_zorb_opt()
 
             if self.action == 9:
+                number_trans = random.randint(NUMBER_TRANS_7[0], NUMBER_TRANS_7[1])
+                logger.info(f'Number of transactions - {number_trans}\n')
+                zora = MintNFT(key, Zora, str_number, proxy)
+                for _ in range(number_trans):
+                    self.chek_gas_eth()
+                    zora.mint_opensea_zorb_zora()
+                    sleeping(TIME_DELAY[0], TIME_DELAY[1])
+
+            if self.action == 10:
+                number_trans = random.randint(NUMBER_TRANS_7[0], NUMBER_TRANS_7[1])
+                logger.info(f'Number of transactions - {number_trans}\n')
+                zora = MintNFT(key, Base, str_number, proxy)
+                for _ in range(number_trans):
+                    self.chek_gas_eth()
+                    zora.mint_opensea_zorb_base()
+                    sleeping(TIME_DELAY[0], TIME_DELAY[1])
+
+            if self.action == 11:
+                number_trans = random.randint(NUMBER_TRANS_7[0], NUMBER_TRANS_7[1])
+                logger.info(f'Number of transactions - {number_trans}\n')
+                zora = MintNFT(key, Optimism, str_number, proxy)
+                for _ in range(number_trans):
+                    self.chek_gas_eth()
+                    zora.mint_opensea_zorb_opt()
+                    sleeping(TIME_DELAY[0], TIME_DELAY[1])
+
+            if self.action == 12:
+                chain, add, id_nft = self.get_chain_and_address()
+                zora = MintNFT(key, chain, str_number, proxy)
+                zora.mint_1155(add, id_nft)
+
+            if self.action == 13:
                 if address_nft is None:
                     logger.error('Address NFT is empty\n')
                     continue
-                zora = MintNFT(key, str_number, proxy)
+                zora = MintNFT(key, Zora, str_number, proxy)
                 res = zora.update_metadata(address_nft)
                 if res is False:
                     continue
 
-            if self.action == 10:
+            if self.action == 14:
                 wal = Wallet(key, Zora, str_number, proxy)
                 number_trans = random.randint(NUMBER_TRANS_YOURSELF[0], NUMBER_TRANS_YOURSELF[1])
                 logger.info(f'Number of transactions to yourself - {number_trans}\n')
@@ -110,13 +159,13 @@ class Worker:
                     wal.transfer_native(address)
                     sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
-            if self.action == 11:
+            if self.action == 15:
                 zora = ZoraScan(key, str_number, proxy)
                 wallet_info_list.append(zora.get_nft_data())
                 time.sleep(0.1)
                 continue
 
-            if self.action == 12:
+            if self.action == 16:
 
                 rout = CustomRouter(key, str_number, proxy, address_nft, address)
                 if routes_shuffle is True:
@@ -133,7 +182,7 @@ class Worker:
             logger.success(f'Account completed, sleep and move on to the next one\n')
             sleeping(TIME_ACCOUNT_DELAY[0], TIME_ACCOUNT_DELAY[1])
 
-        if self.action == 11:
+        if self.action == 15:
             ZoraScan.save_to_exel(wallet_info_list)
             return logger.success('The results are recorded in data/result.xlsx\n')
 
@@ -147,24 +196,28 @@ if __name__ == '__main__':
     while True:
         while True:
             logger.info('''
-1 - Official Bridge ETH -> Zora
-2 - Merkly GAS
-3 - Zerius GAS
-4 - Mint NFT Zerius
-5 - Bridge NFT Zerius
-6 - Mint PYTHON ZORB (Zora.co)
-7 - Mint PYTHON ZORB (Opensea)
-8 - Mint Custom NFT  (Zora.co)
-9 - Update NFT metadata
-10 - Send money yourself
-11 - Check wallets stats
-12 - Custom routs
+1  - Official Bridge ETH -> Zora
+2  - Merkly GAS
+3  - Zerius GAS
+4  - Mint NFT Zerius
+5  - Bridge NFT Zerius
+6  - Mint PYTHON ZORB в сети ZORA     (Базовая комиссия 0.000777 ETH)
+7  - Mint PYTHON ZORB в сети BASE     (Базовая комиссия 0.000777 ETH)
+8  - Mint PYTHON ZORB в сети OPTIMISM (Базовая комиссия 0.000777 ETH)
+9  - Mint PYTHON ZORB через OpenSea в сети ZORA     (FREE MINT)
+10 - Mint PYTHON ZORB через OpenSea в сети BASE     (FREE MINT)
+11 - Mint PYTHON ZORB через OpenSea в сети OPTIMISM (FREE MINT)
+12 - Mint Custom NFT  (Zora.co)
+13 - Update NFT metadata
+14 - Send money yourself
+15 - Check wallets stats
+16 - Custom routs
 ''')
 
             time.sleep(0.1)
             act = int(input('Choose an action: '))
 
-            if act in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]:
+            if act in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]:
                 break
 
         worker = Worker(act)
