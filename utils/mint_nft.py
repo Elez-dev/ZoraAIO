@@ -106,8 +106,8 @@ class MintNFT(Wallet):
             Web3.to_checksum_address('0x04E2516A2c207E84a1839755675dfd8eF6302F0a'),
             1,
             quantity,
-            '0x000000000000000000000000cc05e5454d8ec8f0873ecd6b2e3da945b39aca6c',
-            self.address_wallet
+            '0x000000000000000000000000' + self.address_wallet[2:],
+            Web3.to_checksum_address('0xCC05E5454D8eC8F0873ECD6b2E3da945B39acA6C')
         ).build_transaction(dick)
 
         self.send_transaction_and_wait(txn, f'Mint {quantity} PYTHON ZORB')
