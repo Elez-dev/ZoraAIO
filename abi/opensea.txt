@@ -1,0 +1,33 @@
+[
+    {
+        "constant": false,
+        "inputs": [
+            {
+                "name": "nftContract",
+                "type": "address"
+            },
+            {
+                "name": "feeRecipient",
+                "type": "address"
+            },
+            {
+                "name": "minterIfNotPayer",
+                "type": "address"
+            },
+            {
+                "name": "quantity",
+                "type": "uint256"
+            }
+        ],
+        "name": "mintPublic",
+        "outputs": [
+            {
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+]

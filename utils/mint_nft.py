@@ -6,6 +6,13 @@ from utils.wallet import Wallet
 from utils.retry import exception_handler
 import json as js
 import os
+from settings import QUANTITY_NFT_6, QUANTITY_NFT_7, QUANTITY_NFT_8
+
+ADDRESS = {
+    'Zora': Web3.to_checksum_address('0x04E2516A2c207E84a1839755675dfd8eF6302F0a'),
+    'Base': Web3.to_checksum_address('0xff8b0f870ff56870dc5abd6cb3e6e89c8ba2e062'),
+    'Optimism': Web3.to_checksum_address('0x3678862f04290E565cCA2EF163BAeb92Bb76790C')
+}
 
 
 class MintNFT(Wallet):
@@ -15,112 +22,150 @@ class MintNFT(Wallet):
         self.address_zora = Web3.to_checksum_address('0x00005EA00Ac477B1030CE78506496e8C2dE24bf5')
         self.address_base = Web3.to_checksum_address('0x00005EA00Ac477B1030CE78506496e8C2dE24bf5')
         self.address_optimism = Web3.to_checksum_address('0x00005EA00Ac477B1030CE78506496e8C2dE24bf5')
-        self.abi = js.load(open('./abi/1155.txt'))
+        self.abi_1155 = js.load(open('./abi/1155.txt'))
+        self.abi_opensea = js.load(open('./abi/opensea.txt'))
 
     @exception_handler
     def mint_opensea_zorb_zora(self):
-        logger.info('Mint PYTHON ZORB on OpenSea || Zora chain')
+        quantity = random.randint(QUANTITY_NFT_7[0], QUANTITY_NFT_7[1])
+        logger.info(f'Mint {quantity} PYTHON ZORB on OpenSea || Zora chain')
 
-        txn = {
-            'chainId': self.web3.eth.chain_id,
-            'data': '0x161ac21f000000000000000000000000d3c48e966fe50eafeacd833194a8da22795ae5d80000000000000000000000000000a26b00c1f0df003000390027140000faa71900000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001360c6ebe',
+        dick = {
             'from': self.address_wallet,
-            'to': self.address_zora,
             'nonce': self.web3.eth.get_transaction_count(self.address_wallet),
-            'gas': 130_000,
             **self.get_gas_price()
         }
 
-        self.send_transaction_and_wait(txn, 'Mint PYTHON ZORB on OpenSea')
+        contract = self.web3.eth.contract(address=self.address_zora, abi=self.abi_opensea)
+        txn = contract.functions.mintPublic(
+            Web3.to_checksum_address('0xd3c48e966fe50eafeacd833194a8da22795ae5d8'),
+            Web3.to_checksum_address('0x0000a26b00c1F0DF003000390027140000fAa719'),
+            Web3.to_checksum_address('0x0000000000000000000000000000000000000000'),
+            quantity
+        ).build_transaction(dick)
+
+        self.send_transaction_and_wait(txn, f'Mint {quantity} PYTHON ZORB on OpenSea')
 
     @exception_handler
     def mint_opensea_zorb_base(self):
-        logger.info('Mint PYTHON ZORB on OpenSea || Base chain')
+        quantity = random.randint(QUANTITY_NFT_7[0], QUANTITY_NFT_7[1])
+        logger.info(f'Mint {quantity} PYTHON ZORB on OpenSea || Base chain')
 
-        txn = {
-            'chainId': self.web3.eth.chain_id,
-            'data': '0x161ac21f00000000000000000000000092dfc144b8b897d36e980e6e29217201801a1c1e0000000000000000000000000000a26b00c1f0df003000390027140000faa71900000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001360c6ebe',
+        dick = {
             'from': self.address_wallet,
-            'to': self.address_base,
             'nonce': self.web3.eth.get_transaction_count(self.address_wallet),
-            'gas': 130_000,
             **self.get_gas_price()
         }
 
-        self.send_transaction_and_wait(txn, 'Mint PYTHON ZORB on OpenSea')
+        contract = self.web3.eth.contract(address=self.address_base, abi=self.abi_opensea)
+        txn = contract.functions.mintPublic(
+            Web3.to_checksum_address('0x92dFC144B8B897d36E980e6E29217201801A1C1e'),
+            Web3.to_checksum_address('0x0000a26b00c1F0DF003000390027140000fAa719'),
+            Web3.to_checksum_address('0x0000000000000000000000000000000000000000'),
+            quantity
+        ).build_transaction(dick)
+
+        self.send_transaction_and_wait(txn, f'Mint {quantity} PYTHON ZORB on OpenSea')
 
     @exception_handler
     def mint_opensea_zorb_opt(self):
-        logger.info('Mint PYTHON ZORB on OpenSea || Optimism chain')
+        quantity = random.randint(QUANTITY_NFT_7[0], QUANTITY_NFT_7[1])
+        logger.info(f'Mint {quantity} PYTHON ZORB on OpenSea || Optimism chain')
 
-        txn = {
-            'chainId': self.web3.eth.chain_id,
-            'data': '0x161ac21f0000000000000000000000004301db4122dc1058df3e0e09415d025467348cb10000000000000000000000000000a26b00c1f0df003000390027140000faa71900000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001360c6ebe',
+        dick = {
             'from': self.address_wallet,
-            'to': self.address_optimism,
             'nonce': self.web3.eth.get_transaction_count(self.address_wallet),
-            'gas': 130_000,
             **self.get_gas_price()
         }
 
-        self.send_transaction_and_wait(txn, 'Mint PYTHON ZORB on OpenSea')
+        contract = self.web3.eth.contract(address=self.address_optimism, abi=self.abi_opensea)
+        txn = contract.functions.mintPublic(
+            Web3.to_checksum_address('0x4301db4122dc1058df3e0e09415d025467348cb1'),
+            Web3.to_checksum_address('0x0000a26b00c1F0DF003000390027140000fAa719'),
+            Web3.to_checksum_address('0x0000000000000000000000000000000000000000'),
+            quantity
+        ).build_transaction(dick)
+
+        self.send_transaction_and_wait(txn, f'Mint {quantity} PYTHON ZORB on OpenSea')
 
     @exception_handler
     def mint_zorb_zora(self):
-        logger.info('Mint PYTHON ZORB || Zora chain')
+        quantity = random.randint(QUANTITY_NFT_6[0], QUANTITY_NFT_6[1])
+        logger.info(f'Mint {quantity} PYTHON ZORB || Zora chain')
 
-        txn = {
-            'chainId': self.web3.eth.chain_id,
-            'data': '0x9dbb844d00000000000000000000000004e2516a2c207e84a1839755675dfd8ef6302f0a0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000cc05e5454d8ec8f0873ecd6b2e3da945b39aca6c0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000' + self.address_wallet[2:],
+        contract = self.web3.eth.contract(address=Web3.to_checksum_address('0xC94AcD65b6965370eBEf0a2AdCDAD5B4362dD671'), abi=self.abi_1155)
+        fee = contract.functions.mintFee().call() * quantity
+        dick = {
             'from': self.address_wallet,
-            'to': Web3.to_checksum_address('0xC94AcD65b6965370eBEf0a2AdCDAD5B4362dD671'),
+            'value': fee,
             'nonce': self.web3.eth.get_transaction_count(self.address_wallet),
-            'gas': 200_000,
-            'value': Web3.to_wei(0.000777, 'ether'),
             **self.get_gas_price()
         }
 
-        self.send_transaction_and_wait(txn, 'Mint PYTHON ZORB')
+        txn = contract.functions.mintWithRewards(
+            Web3.to_checksum_address('0x04E2516A2c207E84a1839755675dfd8eF6302F0a'),
+            1,
+            quantity,
+            '0x000000000000000000000000cc05e5454d8ec8f0873ecd6b2e3da945b39aca6c',
+            self.address_wallet
+        ).build_transaction(dick)
+
+        self.send_transaction_and_wait(txn, f'Mint {quantity} PYTHON ZORB')
 
     @exception_handler
     def mint_zorb_base(self):
-        logger.info('Mint PYTHON ZORB || Base chain')
+        quantity = random.randint(QUANTITY_NFT_6[0], QUANTITY_NFT_6[1])
+        logger.info(f'Mint {quantity} PYTHON ZORB || Base chain')
 
-        txn = {
-            'chainId': self.web3.eth.chain_id,
-            'data': '0x9dbb844d000000000000000000000000ff8b0f870ff56870dc5abd6cb3e6e89c8ba2e0620000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000cc05e5454d8ec8f0873ecd6b2e3da945b39aca6c0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000' + self.address_wallet[2:],
+        contract = self.web3.eth.contract(address=Web3.to_checksum_address('0xd63A68fAf5dD0CE2C36Fd0D4B731b2889bD04952'), abi=self.abi_1155)
+        fee = contract.functions.mintFee().call() * quantity
+        dick = {
             'from': self.address_wallet,
-            'to': Web3.to_checksum_address('0xd63A68fAf5dD0CE2C36Fd0D4B731b2889bD04952'),
+            'value': fee,
             'nonce': self.web3.eth.get_transaction_count(self.address_wallet),
-            'gas': 200_000,
-            'value': Web3.to_wei(0.000777, 'ether'),
             **self.get_gas_price()
         }
 
-        self.send_transaction_and_wait(txn, 'Mint PYTHON ZORB')
+        txn = contract.functions.mintWithRewards(
+            Web3.to_checksum_address('0xff8b0f870ff56870dc5abd6cb3e6e89c8ba2e062'),
+            1,
+            quantity,
+            '0x000000000000000000000000' + self.address_wallet[2:],
+            Web3.to_checksum_address('0xCC05E5454D8eC8F0873ECD6b2E3da945B39acA6C')
+        ).build_transaction(dick)
+
+        self.send_transaction_and_wait(txn, f'Mint {quantity} PYTHON ZORB')
 
     @exception_handler
     def mint_zorb_opt(self):
+        quantity = random.randint(QUANTITY_NFT_6[0], QUANTITY_NFT_6[1])
         logger.info('Mint PYTHON ZORB || Optimism chain')
 
-        txn = {
-            'chainId': self.web3.eth.chain_id,
-            'data': '0x9dbb844d0000000000000000000000003678862f04290e565cca2ef163baeb92bb76790c0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000cc05e5454d8ec8f0873ecd6b2e3da945b39aca6c0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000' + self.address_wallet[2:],
+        contract = self.web3.eth.contract(address=Web3.to_checksum_address('0xcb4927957d33b0714a206721c0361638c2fc5f42'), abi=self.abi_1155)
+        fee = contract.functions.mintFee().call() * quantity
+        dick = {
             'from': self.address_wallet,
-            'to': Web3.to_checksum_address('0xCB4927957D33B0714A206721c0361638C2Fc5f42'),
+            'value': fee,
             'nonce': self.web3.eth.get_transaction_count(self.address_wallet),
-            'gas': 200_000,
-            'value': Web3.to_wei(0.000777, 'ether'),
             **self.get_gas_price()
         }
 
-        self.send_transaction_and_wait(txn, 'Mint PYTHON ZORB')
+        txn = contract.functions.mintWithRewards(
+            Web3.to_checksum_address('0x3678862f04290E565cCA2EF163BAeb92Bb76790C'),
+            1,
+            quantity,
+            '0x000000000000000000000000' + self.address_wallet[2:],
+            Web3.to_checksum_address('0xCC05E5454D8eC8F0873ECD6b2E3da945B39acA6C')
+        ).build_transaction(dick)
+
+        self.send_transaction_and_wait(txn, f'Mint {quantity} PYTHON ZORB')
 
     @exception_handler
     def mint_1155(self, address, nft_id):
-        logger.info(f'Mint Custom NFT || {address}')
-        contract = self.web3.eth.contract(address=Web3.to_checksum_address(address), abi=self.abi)
-        fee = contract.functions.mintFee().call()
+        quantity = random.randint(QUANTITY_NFT_8[0], QUANTITY_NFT_8[1])
+        logger.info(f'Mint {quantity} Custom NFT || {address}')
+        contract = self.web3.eth.contract(address=Web3.to_checksum_address(address), abi=self.abi_1155)
+        fee = contract.functions.mintFee().call() * quantity
         dick = {
             'from': self.address_wallet,
             'value': fee,
@@ -130,20 +175,20 @@ class MintNFT(Wallet):
         name = contract.functions.name().call()
 
         txn = contract.functions.mintWithRewards(
-            Web3.to_checksum_address('0x04E2516A2c207E84a1839755675dfd8eF6302F0a'),
-            nft_id,
-            1,
-            '0x000000000000000000000000cc05e5454d8ec8f0873ecd6b2e3da945b39aca6c',
-            self.address_wallet
+            ADDRESS[self.chain],
+            int(nft_id),
+            quantity,
+            '0x000000000000000000000000' + self.address_wallet[2:],
+            Web3.to_checksum_address('0xCC05E5454D8eC8F0873ECD6b2E3da945B39acA6C')
         ).build_transaction(dick)
 
-        self.send_transaction_and_wait(txn, f'Mint {name} NFT')
+        self.send_transaction_and_wait(txn, f'Mint {quantity} {name} NFT')
 
     @exception_handler
     def update_metadata(self, address):
 
         logger.info(f'Update metadata NFT || {address}')
-        contract = self.web3.eth.contract(address=Web3.to_checksum_address(address), abi=self.abi)
+        contract = self.web3.eth.contract(address=Web3.to_checksum_address(address), abi=self.abi_1155)
         owner = contract.functions.owner().call()
         if owner != self.address_wallet:
             logger.error(f'Сurrent wallet: {self.address_wallet} || Creater NFT: {owner}\n')

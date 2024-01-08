@@ -74,16 +74,28 @@ class CustomRouter:
         zer.bridge_nft(nft_id)
 
     def mint_zorb_zora(self):
+        number_trans = random.randint(NUMBER_TRANS_6[0], NUMBER_TRANS_6[1])
+        logger.info(f'Number of transactions - {number_trans}\n')
         zora = MintNFT(self.private_key, Zora, self.str_number, self.proxy)
-        zora.mint_zorb_zora()
+        for _ in range(number_trans):
+            zora.mint_zorb_zora()
+            sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
     def mint_zorb_base(self):
+        number_trans = random.randint(NUMBER_TRANS_6[0], NUMBER_TRANS_6[1])
+        logger.info(f'Number of transactions - {number_trans}\n')
         zora = MintNFT(self.private_key, Base, self.str_number, self.proxy)
-        zora.mint_zorb_base()
+        for _ in range(number_trans):
+            zora.mint_zorb_base()
+            sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
     def mint_zorb_optimism(self):
+        number_trans = random.randint(NUMBER_TRANS_6[0], NUMBER_TRANS_6[1])
+        logger.info(f'Number of transactions - {number_trans}\n')
         zora = MintNFT(self.private_key, Optimism, self.str_number, self.proxy)
-        zora.mint_zorb_opt()
+        for _ in range(number_trans):
+            zora.mint_zorb_opt()
+            sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
     def mint_opensea_zorb_zora(self):
         number_trans = random.randint(NUMBER_TRANS_7[0], NUMBER_TRANS_7[1])
@@ -110,9 +122,13 @@ class CustomRouter:
             sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
     def mint_custom_nft(self):
-        chain, add, id_nft = self.get_chain_and_address()
-        zora = MintNFT(self.private_key, chain, self.str_number, self.proxy)
-        zora.mint_1155(add, id_nft)
+        number_trans = random.randint(NUMBER_TRANS_8[0], NUMBER_TRANS_8[1])
+        logger.info(f'Number of transactions - {number_trans}\n')
+        for _ in range(number_trans):
+            chain, add, id_nft = self.get_chain_and_address()
+            zora = MintNFT(self.private_key, chain, self.str_number, self.proxy)
+            zora.mint_1155(add, id_nft)
+            sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
     def update_nft_metadata(self):
         if self.address_metadata is None:

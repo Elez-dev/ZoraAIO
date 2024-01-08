@@ -14,16 +14,17 @@ CHAIN_RPC = {
 
 MAX_GAS_ETH = 200                     # gas в gwei (смотреть здесь : https://etherscan.io/gastracker)
 ZORA_GASPRICE_PRESCALE = 0.00006      # Использовать Max base fee и Priority fee для газа в Zora, экономия 0.3-0.5$
-BASE_GASPRICE_PRESCALE = 0.1          # Использовать Max base fee и Priority fee для газа в Base
+BASE_GASPRICE_PRESCALE = 0.05         # Использовать Max base fee и Priority fee для газа в Base
 
-RETRY = 5                         # Кол-во попыток при ошибках / фейлах
-TIME_DELAY = [100, 200]           # Задержка после ТРАНЗАКЦИЙ  [min, max]
-TIME_ACCOUNT_DELAY = [200, 300]   # Задержка между АККАУНТАМИ  [min, max]
-TIME_DELAY_ERROR = [10, 20]       # Задержка при ошибках / фейлах [min, max]
+RETRY = 5                             # Кол-во попыток при ошибках / фейлах
+TIME_DELAY = [100, 200]               # Задержка после ТРАНЗАКЦИЙ  [min, max]
+TIME_ACCOUNT_DELAY = [200, 300]       # Задержка между АККАУНТАМИ  [min, max]
+TIME_DELAY_ERROR = [10, 20]           # Задержка при ошибках / фейлах [min, max]
 
 # 1 - Официальный мост https://bridge.zora.energy/ -----------------------------------------------------------------------------------------------------------------------------------------------
 
-OFF_ZORA_DEPOSIT = [0.001, 0.002, 5]  # Сумма для депозита [min, max, round_decimal]
+OFF_ZORA_DEPOSIT = [0.003, 0.003, 5]  # Сумма для депозита [min, max, round_decimal]
+                                      # Если сумма больше чем на балансе, будет бридж всего баланса
 
 # 2 - Merkly ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Список доступных сетей: Arbitrum, Optimism, Polygon, Base, Zora
@@ -41,23 +42,35 @@ VALUE_ZERIUS = [0.0035, 0.0035, 4]     # Количество [min, max, round_d
 
 CHAIN_TO_BRIDGE_ZERIUS = Polygon       # В какую сеть бридж нфт
 
-# 7 - Mint PYTHON ZORB (Opensea) -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# 6 - 8 || Mint PYTHON ZORB (Zora.co) --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+QUANTITY_NFT_6 = [1, 1]  # Количество нфт для минта
+NUMBER_TRANS_6 = [1, 1]  # Количество транзакций [min, max]
+
+# 9 - 11 || Mint PYTHON ZORB (Opensea) -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+QUANTITY_NFT_7 = [10, 20]  # Количество нфт для минта
 NUMBER_TRANS_7 = [1, 1]  # Количество транзакций [min, max]
 
 # 8 - Mint Custom NFT -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-URL_CUSTOM_NFT = ['https://zora.co/collect/zora:0x81d226fb36ca785583e79e84312335d0e166d59b/1']  # https://zora.co/collect/zora:0x81d226fb36ca785583e79e84312335d0e166d59b/1 - нфт от гиткоина
+URL_CUSTOM_NFT = ['https://zora.co/collect/zora:0x81d226fb36ca785583e79e84312335d0e166d59b/1',  # https://zora.co/collect/zora:0x81d226fb36ca785583e79e84312335d0e166d59b/1 - нфт от гиткоина
+                  'https://zora.co/collect/zora:0x1dc9ff62bbc4c6f2ed4ef3fbc095db5416e4894f/1',  # https://zora.co/collect/zora:0x1dc9ff62bbc4c6f2ed4ef3fbc095db5416e4894f/1 - Layer3 on Zora
+                  'https://zora.co/collect/oeth:0x6995d9f4ab942dc5385e9b6986253ab22793e28f/1',  # https://zora.co/collect/oeth:0x6995d9f4ab942dc5385e9b6986253ab22793e28f/1 - Upload Imagination (OPTIMISM)
+                  'https://zora.co/collect/zora:0x393c46fe7887697124a73f6028f39751aa1961a3/1']  # https://zora.co/collect/zora:0x393c46fe7887697124a73f6028f39751aa1961a3/1 - NFT от Co-founder Sound.xyz
+
                                                                                                 # Минт любых других нфт на Zora.co (Будет рандомная из списка)
                                                                                                 # Сюда пишем url нфт
+QUANTITY_NFT_8 = [1, 1]  # Количество нфт для минта
+NUMBER_TRANS_8 = [1, 1]  # Количество транзакций [min, max]
 
-# 10 - Send money yourself -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# 14 - Send money yourself -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 NUMBER_TRANS_YOURSELF = [1, 2]    # Количсетво транзакций самому себе [min, max]
 
-# 12 - Custom routes -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# 16 - Custom routes -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-routes = ['mint_opensea_zorb', 'update_nft_metadata', 'send_money_yourself']
+routes = ['mint_zorb_zora', 'update_nft_metadata', 'send_money_yourself', 'mint_bridge_nft']
 
 routes_shuffle        = True                       # Перемешивает модули
 time_delay_routes_min = 100                        # Минимальная и
@@ -66,6 +79,7 @@ time_delay_routes_max = 200                        # Максимальная з
           # Список доступных модулей
           # 'merkly_refuel',                        - Merkly refuel
           # 'zerius_refuel',                        - Zerius refuel
+          # 'mint_bridge_nft'                       - Mint NFT Zerius + bridge
           # 'mint_zorb_zora'                        - Mint PYTHON ZORB в сети ZORA     (Базовая комиссия 0.000777 ETH)
           # 'mint_zorb_base'                        - Mint PYTHON ZORB в сети BASE     (Базовая комиссия 0.000777 ETH)
           # 'mint_zorb_optimism'                    - Mint PYTHON ZORB в сети OPTIMISM (Базовая комиссия 0.000777 ETH)

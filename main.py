@@ -98,16 +98,28 @@ class Worker:
                 zer.bridge_nft(nft_id)
 
             if self.action == 6:
+                number_trans = random.randint(NUMBER_TRANS_6[0], NUMBER_TRANS_6[1])
+                logger.info(f'Number of transactions - {number_trans}\n')
                 zora = MintNFT(key, Zora, str_number, proxy)
-                zora.mint_zorb_zora()
+                for _ in range(number_trans):
+                    zora.mint_zorb_zora()
+                    sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
             if self.action == 7:
+                number_trans = random.randint(NUMBER_TRANS_6[0], NUMBER_TRANS_6[1])
+                logger.info(f'Number of transactions - {number_trans}\n')
                 zora = MintNFT(key, Base, str_number, proxy)
-                zora.mint_zorb_base()
+                for _ in range(number_trans):
+                    zora.mint_zorb_base()
+                    sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
             if self.action == 8:
+                number_trans = random.randint(NUMBER_TRANS_6[0], NUMBER_TRANS_6[1])
+                logger.info(f'Number of transactions - {number_trans}\n')
                 zora = MintNFT(key, Optimism, str_number, proxy)
-                zora.mint_zorb_opt()
+                for _ in range(number_trans):
+                    zora.mint_zorb_opt()
+                    sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
             if self.action == 9:
                 number_trans = random.randint(NUMBER_TRANS_7[0], NUMBER_TRANS_7[1])
@@ -137,9 +149,13 @@ class Worker:
                     sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
             if self.action == 12:
-                chain, add, id_nft = self.get_chain_and_address()
-                zora = MintNFT(key, chain, str_number, proxy)
-                zora.mint_1155(add, id_nft)
+                number_trans = random.randint(NUMBER_TRANS_8[0], NUMBER_TRANS_8[1])
+                logger.info(f'Number of transactions - {number_trans}\n')
+                for _ in range(number_trans):
+                    chain, add, id_nft = self.get_chain_and_address()
+                    zora = MintNFT(key, chain, str_number, proxy)
+                    zora.mint_1155(add, id_nft)
+                    sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
             if self.action == 13:
                 if address_nft is None:
