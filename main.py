@@ -13,6 +13,9 @@ from utils.mint_nft import MintNFT
 from utils.wallet import Wallet
 from utils.walet_stats import ZoraScan
 from utils.custom_route import CustomRouter
+from utils.create_contract import CreateContract
+from utils.l2pass import L2Pass
+from utils.nft2me import NFT2ME
 
 
 logger.remove()
@@ -98,6 +101,15 @@ class Worker:
                 zer.bridge_nft(nft_id)
 
             if self.action == 6:
+                l2 = L2Pass(key, Zora, CHAIN_TO_BRIDGE_L2, str_number, proxy)
+                l2.mint_nft()
+
+            if self.action == 7:
+                l2 = L2Pass(key, Zora, CHAIN_TO_BRIDGE_L2, str_number, proxy)
+                nft_id = l2.get_nft_id()
+                l2.bridge_nft(nft_id)
+
+            if self.action == 8:
                 number_trans = random.randint(NUMBER_TRANS_6[0], NUMBER_TRANS_6[1])
                 logger.info(f'Number of transactions - {number_trans}\n')
                 zora = MintNFT(key, Zora, str_number, proxy)
@@ -105,7 +117,7 @@ class Worker:
                     zora.mint_zorb_zora()
                     sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
-            if self.action == 7:
+            if self.action == 9:
                 number_trans = random.randint(NUMBER_TRANS_6[0], NUMBER_TRANS_6[1])
                 logger.info(f'Number of transactions - {number_trans}\n')
                 zora = MintNFT(key, Base, str_number, proxy)
@@ -113,7 +125,7 @@ class Worker:
                     zora.mint_zorb_base()
                     sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
-            if self.action == 8:
+            if self.action == 10:
                 number_trans = random.randint(NUMBER_TRANS_6[0], NUMBER_TRANS_6[1])
                 logger.info(f'Number of transactions - {number_trans}\n')
                 zora = MintNFT(key, Optimism, str_number, proxy)
@@ -121,7 +133,7 @@ class Worker:
                     zora.mint_zorb_opt()
                     sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
-            if self.action == 9:
+            if self.action == 11:
                 number_trans = random.randint(NUMBER_TRANS_7[0], NUMBER_TRANS_7[1])
                 logger.info(f'Number of transactions - {number_trans}\n')
                 zora = MintNFT(key, Zora, str_number, proxy)
@@ -130,7 +142,7 @@ class Worker:
                     zora.mint_opensea_zorb_zora()
                     sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
-            if self.action == 10:
+            if self.action == 12:
                 number_trans = random.randint(NUMBER_TRANS_7[0], NUMBER_TRANS_7[1])
                 logger.info(f'Number of transactions - {number_trans}\n')
                 zora = MintNFT(key, Base, str_number, proxy)
@@ -139,7 +151,7 @@ class Worker:
                     zora.mint_opensea_zorb_base()
                     sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
-            if self.action == 11:
+            if self.action == 13:
                 number_trans = random.randint(NUMBER_TRANS_7[0], NUMBER_TRANS_7[1])
                 logger.info(f'Number of transactions - {number_trans}\n')
                 zora = MintNFT(key, Optimism, str_number, proxy)
@@ -148,7 +160,7 @@ class Worker:
                     zora.mint_opensea_zorb_opt()
                     sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
-            if self.action == 12:
+            if self.action == 14:
                 number_trans = random.randint(NUMBER_TRANS_8[0], NUMBER_TRANS_8[1])
                 logger.info(f'Number of transactions - {number_trans}\n')
                 for _ in range(number_trans):
@@ -157,7 +169,19 @@ class Worker:
                     zora.mint_1155(add, id_nft)
                     sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
-            if self.action == 13:
+            if self.action == 15:
+                number_trans = random.randint(NUMBER_TRANS_15[0], NUMBER_TRANS_15[1])
+                logger.info(f'Number of transactions - {number_trans}\n')
+                for _ in range(number_trans):
+                    zora = NFT2ME(key, Zora, str_number, proxy)
+                    zora.mint()
+                    sleeping(TIME_DELAY[0], TIME_DELAY[1])
+
+            if self.action == 16:
+                contr = CreateContract(key, Zora, str_number, proxy)
+                contr.create_contarct()
+
+            if self.action == 17:
                 if address_nft is None:
                     logger.error('Address NFT is empty\n')
                     continue
@@ -166,7 +190,7 @@ class Worker:
                 if res is False:
                     continue
 
-            if self.action == 14:
+            if self.action == 18:
                 wal = Wallet(key, Zora, str_number, proxy)
                 number_trans = random.randint(NUMBER_TRANS_YOURSELF[0], NUMBER_TRANS_YOURSELF[1])
                 logger.info(f'Number of transactions to yourself - {number_trans}\n')
@@ -175,13 +199,13 @@ class Worker:
                     wal.transfer_native(address)
                     sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
-            if self.action == 15:
+            if self.action == 19:
                 zora = ZoraScan(key, str_number, proxy)
                 wallet_info_list.append(zora.get_nft_data())
                 time.sleep(0.1)
                 continue
 
-            if self.action == 16:
+            if self.action == 20:
 
                 rout = CustomRouter(key, str_number, proxy, address_nft, address)
                 if routes_shuffle is True:
@@ -198,7 +222,7 @@ class Worker:
             logger.success(f'Account completed, sleep and move on to the next one\n')
             sleeping(TIME_ACCOUNT_DELAY[0], TIME_ACCOUNT_DELAY[1])
 
-        if self.action == 15:
+        if self.action == 19:
             ZoraScan.save_to_exel(wallet_info_list)
             return logger.success('The results are recorded in data/result.xlsx\n')
 
@@ -217,23 +241,27 @@ if __name__ == '__main__':
 3  - Zerius GAS
 4  - Mint NFT Zerius
 5  - Bridge NFT Zerius
-6  - Mint PYTHON ZORB в сети ZORA     (Базовая комиссия 0.000777 ETH)
-7  - Mint PYTHON ZORB в сети BASE     (Базовая комиссия 0.000777 ETH)
-8  - Mint PYTHON ZORB в сети OPTIMISM (Базовая комиссия 0.000777 ETH)
-9  - Mint PYTHON ZORB через OpenSea в сети ZORA     (FREE MINT)
-10 - Mint PYTHON ZORB через OpenSea в сети BASE     (FREE MINT)
-11 - Mint PYTHON ZORB через OpenSea в сети OPTIMISM (FREE MINT)
-12 - Mint Custom NFT  (Zora.co)
-13 - Update NFT metadata
-14 - Send money yourself
-15 - Check wallets stats
-16 - Custom routs
+6  - Mint NFT L2PASS
+7  - Bridge NFT L2PASS 
+8  - Mint PYTHON ZORB в сети ZORA     (Базовая комиссия 0.000777 ETH)
+9  - Mint PYTHON ZORB в сети BASE     (Базовая комиссия 0.000777 ETH)
+10 - Mint PYTHON ZORB в сети OPTIMISM (Базовая комиссия 0.000777 ETH)
+11 - Mint PYTHON ZORB через OpenSea в сети ZORA     (FREE MINT)
+12 - Mint PYTHON ZORB через OpenSea в сети BASE     (FREE MINT)
+13 - Mint PYTHON ZORB через OpenSea в сети OPTIMISM (FREE MINT)
+14 - Mint Custom NFT  (Zora.co)
+15 - Mint NFTS2ME
+16 - Create conract NFT ERC1155 (Zora.co)
+17 - Update NFT metadata
+18 - Send money yourself
+19 - Check wallets stats
+20 - Custom routs
 ''')
 
             time.sleep(0.1)
             act = int(input('Choose an action: '))
 
-            if act in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]:
+            if act in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]:
                 break
 
         worker = Worker(act)

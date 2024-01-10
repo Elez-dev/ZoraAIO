@@ -14,6 +14,12 @@ ADDRESS = {
     'Optimism': Web3.to_checksum_address('0x3678862f04290E565cCA2EF163BAeb92Bb76790C')
 }
 
+addr_nft = ['0xd3c48e966fe50eafeacd833194a8da22795ae5d8',
+            '0xdd9b90deb027cbcdacea70eb87a19196d04c21fe',
+            '0x5d4523babbbb8087cafd15cdcfaae3b7c5418ba5',
+            '0x51ddb74ba7c41a961f7503007f8252433563eb29',
+            '0xa6afbe046a67777ea28c3707f4827822d0737d98']
+
 
 class MintNFT(Wallet):
 
@@ -38,7 +44,7 @@ class MintNFT(Wallet):
 
         contract = self.web3.eth.contract(address=self.address_zora, abi=self.abi_opensea)
         txn = contract.functions.mintPublic(
-            Web3.to_checksum_address('0xd3c48e966fe50eafeacd833194a8da22795ae5d8'),
+            Web3.to_checksum_address(random.choice(addr_nft)),
             Web3.to_checksum_address('0x0000a26b00c1F0DF003000390027140000fAa719'),
             Web3.to_checksum_address('0x0000000000000000000000000000000000000000'),
             quantity

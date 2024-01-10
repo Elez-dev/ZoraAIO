@@ -5,6 +5,9 @@ from utils.merkly import Merkly
 from utils.zerius import Zerius
 from utils.mint_nft import MintNFT
 from utils.wallet import Wallet
+from utils.l2pass import L2Pass
+from utils.nft2me import NFT2ME
+from utils.create_contract import CreateContract
 from web3 import Web3
 import random
 import time
@@ -66,12 +69,19 @@ class CustomRouter:
         zer = Zerius(self.private_key, CHAIN_FROM_ZERIUS, CHAIN_TO_ZERIUS, self.str_number, self.proxy)
         zer.refuel()
 
-    def mint_bridge_nft(self):
+    def mint_bridge_nft_zerius(self):
         zer = Zerius(self.private_key, Zora, CHAIN_TO_BRIDGE_ZERIUS, self.str_number, self.proxy)
         zer.mint_nft()
         sleeping(TIME_ACCOUNT_DELAY[0], TIME_ACCOUNT_DELAY[1])
         nft_id = zer.get_nft_id()
         zer.bridge_nft(nft_id)
+
+    def mint_bridge_nft_l2pass(self):
+        l2 = L2Pass(self.private_key, Zora, CHAIN_TO_BRIDGE_ZERIUS, self.str_number, self.proxy)
+        l2.mint_nft()
+        sleeping(TIME_ACCOUNT_DELAY[0], TIME_ACCOUNT_DELAY[1])
+        nft_id = l2.get_nft_id()
+        l2.bridge_nft(nft_id)
 
     def mint_zorb_zora(self):
         number_trans = random.randint(NUMBER_TRANS_6[0], NUMBER_TRANS_6[1])
@@ -144,3 +154,15 @@ class CustomRouter:
         for _ in range(number_trans):
             wal.transfer_native(self.address_wallet)
             sleeping(TIME_DELAY[0], TIME_DELAY[1])
+
+    def mint_nft2me(self):
+        number_trans = random.randint(NUMBER_TRANS_15[0], NUMBER_TRANS_15[1])
+        logger.info(f'Number of transactions - {number_trans}\n')
+        zora = NFT2ME(self.private_key, Zora, self.str_number, self.proxy)
+        for _ in range(number_trans):
+            zora.mint()
+            sleeping(TIME_DELAY[0], TIME_DELAY[1])
+
+    def create_contract(self):
+        contr = CreateContract(self.private_key, Zora, self.str_number, self.proxy)
+        contr.create_contarct()
