@@ -8,6 +8,7 @@ from utils.wallet import Wallet
 from utils.l2pass import L2Pass
 from utils.nft2me import NFT2ME
 from utils.create_contract import CreateContract
+from utils.mintfun import MintFun
 from web3 import Web3
 import random
 import time
@@ -166,3 +167,11 @@ class CustomRouter:
     def create_contract(self):
         contr = CreateContract(self.private_key, Zora, self.str_number, self.proxy)
         contr.create_contarct()
+
+    def mintfun(self):
+        number_trans = random.randint(NUMBER_TRANS_16[0], NUMBER_TRANS_16[1])
+        logger.info(f'Number of transactions - {number_trans}\n')
+        mintfun = MintFun(self.private_key, Zora, self.str_number, self.proxy)
+        for _ in range(number_trans):
+            mintfun.mint()
+            sleeping(TIME_DELAY[0], TIME_DELAY[1])

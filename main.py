@@ -16,6 +16,7 @@ from utils.custom_route import CustomRouter
 from utils.create_contract import CreateContract
 from utils.l2pass import L2Pass
 from utils.nft2me import NFT2ME
+from utils.mintfun import MintFun
 
 
 logger.remove()
@@ -178,10 +179,18 @@ class Worker:
                     sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
             if self.action == 16:
+                number_trans = random.randint(NUMBER_TRANS_16[0], NUMBER_TRANS_16[1])
+                logger.info(f'Number of transactions - {number_trans}\n')
+                mintfun = MintFun(key, Zora, str_number, proxy)
+                for _ in range(number_trans):
+                    mintfun.mint()
+                    sleeping(TIME_DELAY[0], TIME_DELAY[1])
+
+            if self.action == 17:
                 contr = CreateContract(key, Zora, str_number, proxy)
                 contr.create_contarct()
 
-            if self.action == 17:
+            if self.action == 18:
                 if address_nft is None:
                     logger.error('Address NFT is empty\n')
                     continue
@@ -190,7 +199,7 @@ class Worker:
                 if res is False:
                     continue
 
-            if self.action == 18:
+            if self.action == 19:
                 wal = Wallet(key, Zora, str_number, proxy)
                 number_trans = random.randint(NUMBER_TRANS_YOURSELF[0], NUMBER_TRANS_YOURSELF[1])
                 logger.info(f'Number of transactions to yourself - {number_trans}\n')
@@ -199,13 +208,13 @@ class Worker:
                     wal.transfer_native(address)
                     sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
-            if self.action == 19:
+            if self.action == 20:
                 zora = ZoraScan(key, str_number, proxy)
                 wallet_info_list.append(zora.get_nft_data())
                 time.sleep(0.1)
                 continue
 
-            if self.action == 20:
+            if self.action == 21:
 
                 rout = CustomRouter(key, str_number, proxy, address_nft, address)
                 if routes_shuffle is True:
@@ -222,7 +231,7 @@ class Worker:
             logger.success(f'Account completed, sleep and move on to the next one\n')
             sleeping(TIME_ACCOUNT_DELAY[0], TIME_ACCOUNT_DELAY[1])
 
-        if self.action == 19:
+        if self.action == 20:
             ZoraScan.save_to_exel(wallet_info_list)
             return logger.success('The results are recorded in data/result.xlsx\n')
 
@@ -251,11 +260,12 @@ if __name__ == '__main__':
 13 - Mint PYTHON ZORB через OpenSea в сети OPTIMISM (FREE MINT)
 14 - Mint Custom NFT  (Zora.co)
 15 - Mint NFTS2ME (FREE MINT)
-16 - Create contract NFT ERC1155 (Zora.co)
-17 - Update NFT metadata
-18 - Send money yourself
-19 - Check wallets stats
-20 - Custom routs
+16 - Mint free NFT from Mint.fun
+17 - Create contract NFT ERC1155 (Zora.co)
+18 - Update NFT metadata
+19 - Send money yourself
+20 - Check wallets stats
+21 - Custom routs
 ''')
 
             time.sleep(0.1)
