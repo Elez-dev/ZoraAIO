@@ -88,7 +88,7 @@ NUMBER_TRANS_YOURSELF = [1, 2]                     # Количеcтво тра�
 
 # 21 - Custom routes -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-routes = ['mint_zorb_zora', 'create_contract', 'update_nft_metadata', 'send_money_yourself', 'mint_bridge_nft', 'mintfun', 'mint_opensea_zorb_zora', 'mint_nft2me']
+routes = ['mint_zorb_zora', 'create_contract', 'update_nft_metadata', 'send_money_yourself', 'mintfun', 'mint_opensea_zorb_zora', 'mint_nft2me']
 
 routes_shuffle        = True                       # Перемешивает модули || True/ False
 time_delay_routes_min = 100                        # Минимальная и
