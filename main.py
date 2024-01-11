@@ -243,15 +243,15 @@ if __name__ == '__main__':
 5  - Bridge NFT Zerius
 6  - Mint NFT L2PASS
 7  - Bridge NFT L2PASS 
-8  - Mint PYTHON ZORB в сети ZORA     (Базовая комиссия 0.000777 ETH)
-9  - Mint PYTHON ZORB в сети BASE     (Базовая комиссия 0.000777 ETH)
-10 - Mint PYTHON ZORB в сети OPTIMISM (Базовая комиссия 0.000777 ETH)
+8  - Mint PYTHON ZORB в сети ZORA     (С официальной комиссией ZORA 0.000777 ETH)
+9  - Mint PYTHON ZORB в сети BASE     (С официальной комиссией ZORA 0.000777 ETH)
+10 - Mint PYTHON ZORB в сети OPTIMISM (С официальной комиссией ZORA 0.000777 ETH)
 11 - Mint PYTHON ZORB через OpenSea в сети ZORA     (FREE MINT)
 12 - Mint PYTHON ZORB через OpenSea в сети BASE     (FREE MINT)
 13 - Mint PYTHON ZORB через OpenSea в сети OPTIMISM (FREE MINT)
 14 - Mint Custom NFT  (Zora.co)
-15 - Mint NFTS2ME
-16 - Create conract NFT ERC1155 (Zora.co)
+15 - Mint NFTS2ME (FREE MINT)
+16 - Create contract NFT ERC1155 (Zora.co)
 17 - Update NFT metadata
 18 - Send money yourself
 19 - Check wallets stats
