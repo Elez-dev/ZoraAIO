@@ -13,7 +13,7 @@ CHAIN_RPC = {
 }
 
 MAX_GAS_ETH = 40                                   # gas в gwei (смотреть здесь : https://etherscan.io/gastracker)
-ZORA_GASPRICE_PRESCALE = 0.00006                   # Использовать Max base fee и Priority fee для газа в Zora, экономия 0.3-0.5$
+ZORA_GASPRICE_PRESCALE = 0.0001                   # Использовать Max base fee и Priority fee для газа в Zora, экономия 0.3-0.5$
 BASE_GASPRICE_PRESCALE = 0.05                      # Использовать Max base fee и Priority fee для газа в Base
 
 RETRY = 5                                          # Количество попыток при ошибках / фейлах
