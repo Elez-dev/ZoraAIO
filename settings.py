@@ -7,7 +7,7 @@ CHAIN_RPC = {
     'Arbitrum': 'https://1rpc.io/arb',
     'Optimism': 'https://1rpc.io/op',
     'Polygon' : 'https://1rpc.io/matic',
-    'Zora'    : 'https://rpc.zora.energy',
+    'Zora'    : 'https://rpc.zora.energy',         # https://zora.rpc.thirdweb.com
     'Ethereum': 'https://rpc.ankr.com/eth',
     'Base'    : 'https://rpc.ankr.com/base'
 }
