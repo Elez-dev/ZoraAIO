@@ -21,7 +21,7 @@ class NFT2ME(Wallet):
     @exception_handler
     def mint(self):
         quantity = random.randint(QUANTITY_NFT_15[0], QUANTITY_NFT_15[1])
-        name = self.contract.functions.name().call
+        name = self.contract.functions.name().call()
         logger.info(f'Mint {quantity} {name} on NFT2ME || Zora chain')
         dick = {
             'from': self.address_wallet,

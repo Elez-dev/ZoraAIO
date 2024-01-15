@@ -7,13 +7,13 @@ CHAIN_RPC = {
     'Arbitrum': 'https://1rpc.io/arb',
     'Optimism': 'https://1rpc.io/op',
     'Polygon' : 'https://1rpc.io/matic',
-    'Zora'    : 'https://rpc.zora.energy',
+    'Zora'    : 'https://rpc.zora.energy',         # https://zora.rpc.thirdweb.com
     'Ethereum': 'https://rpc.ankr.com/eth',
     'Base'    : 'https://rpc.ankr.com/base'
 }
 
 MAX_GAS_ETH = 40                                   # gas в gwei (смотреть здесь : https://etherscan.io/gastracker)
-ZORA_GASPRICE_PRESCALE = 0.00006                   # Использовать Max base fee и Priority fee для газа в Zora, экономия 0.3-0.5$
+ZORA_GASPRICE_PRESCALE = 0.0001                    # Использовать Max base fee и Priority fee для газа в Zora, экономия 0.3-0.5$
 BASE_GASPRICE_PRESCALE = 0.05                      # Использовать Max base fee и Priority fee для газа в Base
 
 RETRY = 5                                          # Количество попыток при ошибках / фейлах
@@ -58,17 +58,9 @@ NUMBER_TRANS_7 = [1, 2]                            # Количество тра
 
 # 14 - Mint Custom NFT -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-URL_CUSTOM_NFT = ['https://zora.co/collect/zora:0x81d226fb36ca785583e79e84312335d0e166d59b/1',  # https://zora.co/collect/zora:0x81d226fb36ca785583e79e84312335d0e166d59b/1 - NFT от Gitcoin
-                  'https://zora.co/collect/zora:0x1dc9ff62bbc4c6f2ed4ef3fbc095db5416e4894f/1',  # https://zora.co/collect/zora:0x1dc9ff62bbc4c6f2ed4ef3fbc095db5416e4894f/1 - Layer3 on Zora
-                  'https://zora.co/collect/oeth:0x6995d9f4ab942dc5385e9b6986253ab22793e28f/1',  # https://zora.co/collect/oeth:0x6995d9f4ab942dc5385e9b6986253ab22793e28f/1 - Upload Imagination (OPTIMISM)
-                  'https://zora.co/collect/zora:0x393c46fe7887697124a73f6028f39751aa1961a3/1',  # https://zora.co/collect/zora:0x393c46fe7887697124a73f6028f39751aa1961a3/1 - NFT от Co-founder Sound.xyz
-                  'https://zora.co/collect/oeth:0xe538598941e4a25f471aef9b1b5dffd6ee0fda54/2',  # https://zora.co/collect/oeth:0xe538598941e4a25f471aef9b1b5dffd6ee0fda54/2 - THE WORLD OF ENDLESS POSSIBILITIES от Zerion Wallet (OPTIMISM)
-                  'https://zora.co/collect/oeth:0x31eb3dd0e75dac10d07e8c6cfa54bcb7ae1774ce',    # https://zora.co/collect/oeth:0x31eb3dd0e75dac10d07e8c6cfa54bcb7ae1774ce   - WHY ARE YOU STILL HERE? от Zerion Wallet (OPTIMISM)
-                  'https://zora.co/collect/zora:0x149ba794fc1de8f6c05d6b209fa655ef1666a057',    # https://zora.co/collect/zora:0x149ba794fc1de8f6c05d6b209fa655ef1666a057   - Rainbow is for everyone от Rainbow Wallet
-                  'https://zora.co/collect/zora:0x86477e3b43a2f7dd2f2b3480ddbc2555f4edb074',    # https://zora.co/collect/zora:0x86477e3b43a2f7dd2f2b3480ddbc2555f4edb074   - Introducing: Rainbow Extension от Rainbow Wallet 
-                  'https://zora.co/collect/base:0x1fa2faf72b78ab9e6a1424f31252dbef459638f4']    # https://zora.co/collect/base:0x1fa2faf72b78ab9e6a1424f31252dbef459638f4   - Double Rainbow (BASE) от Rainbow Wallet
-                                                                                                # Минт любых других NFT на Zora.co (Будет рандомная из списка)
-                                                                                                # Сюда пишем url NFT
+URL_CUSTOM_NFT = ['https://zora.co/collect/zora:0xf0c8f615fdb98470052318a581913517415abda1/1', # Минт любых других NFT на Zora.co (Будет рандомная из списка)
+                  'https://zora.co/collect/zora:0xc3c5b2d37e7f58da932be74632cb386f44add722/1']  # Сюда пишем url NFT
+    
 QUANTITY_NFT_8 = [1, 1]                            # Количество NFT для минта
 NUMBER_TRANS_8 = [1, 1]                            # Количество транзакций             [min, max]
 
@@ -88,7 +80,7 @@ NUMBER_TRANS_YOURSELF = [1, 2]                     # Количеcтво тра�
 
 # 21 - Custom routes -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-routes = ['mint_zorb_zora', 'create_contract', 'update_nft_metadata', 'send_money_yourself', 'mint_bridge_nft', 'mintfun', 'mint_opensea_zorb_zora', 'mint_nft2me']
+routes = ['mint_zorb_zora', 'create_contract', 'update_nft_metadata', 'send_money_yourself', 'mintfun', 'mint_opensea_zorb_zora', 'mint_nft2me']
 
 routes_shuffle        = True                       # Перемешивает модули || True/ False
 time_delay_routes_min = 100                        # Минимальная и

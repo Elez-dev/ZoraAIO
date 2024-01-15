@@ -70,15 +70,17 @@ python3.10 main.py
 
 15 - Mint NFTS2ME (FREE MINT)
 
-16 - Create contract NFT ERC1155 (Zora.co)
+16 - Mint free NFT from Mint.fun
 
-17 - Update NFT metadata
+17 - Create contract NFT ERC1155 (Zora.co)
 
-18 - Send money yourself
+18 - Update NFT metadata
 
-19 - Check wallets stats
+19 - Send money yourself
 
-20 - Custom routs
+20 - Check wallets stats
+
+21 - Custom routs
 
 
 ---
