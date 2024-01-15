@@ -1,6 +1,7 @@
 import random
 import requests
 from loguru import logger
+import string
 from web3 import Web3
 from utils.wallet import Wallet
 from utils.retry import exception_handler
@@ -35,9 +36,9 @@ class CreateContract(Wallet):
 
     @staticmethod
     def get_name():
-        with open('utils/words.txt', 'r') as f:
-            list_word = f.readlines()
-        return random.choice(list_word)[:-1] + '' + random.choice(list_word)[:-1] + '' + random.choice(list_word)[:-1]
+        characters = string.ascii_letters + string.digits  # буквы и цифры
+        random_string = ''.join(random.choice(characters) for _ in range(7))
+        return random_string
 
     @exception_handler
     def create_contarct(self):
@@ -46,7 +47,6 @@ class CreateContract(Wallet):
         dick = {
             'from': self.address_wallet,
             'nonce': self.web3.eth.get_transaction_count(self.address_wallet),
-            'gas': 800_000,
             **self.get_gas_price()
         }
 
