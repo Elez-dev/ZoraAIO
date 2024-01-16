@@ -18,6 +18,7 @@ from utils.l2pass import L2Pass
 from utils.nft2me import NFT2ME
 from utils.mintfun import MintFun
 from utils.tunnel_bridge import TunnelBridge
+from utils.claim_reward import ClaimReward
 
 
 logger.remove()
@@ -205,6 +206,10 @@ class Worker:
                     continue
 
             if self.action == 20:
+                clm = ClaimReward(key, Zora, str_number, proxy)
+                clm.claim()
+
+            if self.action == 21:
                 wal = Wallet(key, Zora, str_number, proxy)
                 number_trans = random.randint(NUMBER_TRANS_YOURSELF[0], NUMBER_TRANS_YOURSELF[1])
                 logger.info(f'Number of transactions to yourself - {number_trans}\n')
@@ -213,13 +218,13 @@ class Worker:
                     wal.transfer_native(address)
                     sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
-            if self.action == 21:
+            if self.action == 22:
                 zora = ZoraScan(key, str_number, proxy)
                 wallet_info_list.append(zora.get_nft_data())
                 time.sleep(0.1)
                 continue
 
-            if self.action == 22:
+            if self.action == 23:
 
                 rout = CustomRouter(key, str_number, proxy, address_nft, address)
                 if routes_shuffle is True:
@@ -236,7 +241,7 @@ class Worker:
             logger.success(f'Account completed, sleep and move on to the next one\n')
             sleeping(TIME_ACCOUNT_DELAY[0], TIME_ACCOUNT_DELAY[1])
 
-        if self.action == 21:
+        if self.action == 22:
             ZoraScan.save_to_exel(wallet_info_list)
             return logger.success('The results are recorded in data/result.xlsx\n')
 
@@ -269,15 +274,16 @@ if __name__ == '__main__':
 17 - Mint free NFT from Mint.fun
 18 - Create contract NFT ERC1155 (Zora.co)
 19 - Update NFT metadata
-20 - Send money yourself
-21 - Check wallets stats
-22 - Custom routs
+20 - Claim reward (Zora.co)
+21 - Send money yourself
+22 - Check wallets stats
+23 - Custom routs
 ''')
 
             time.sleep(0.1)
             act = int(input('Choose an action: '))
 
-            if act in range(1, 23):
+            if act in range(1, 24):
                 break
 
         worker = Worker(act)
