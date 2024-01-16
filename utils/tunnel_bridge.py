@@ -47,11 +47,9 @@ class TunnelBridge(Wallet):
         data = self.get_api_call_data_post(url[self.chain_to], json)
 
         value = int(data['steps'][0]['items'][0]['data']['value'])
-        gas = int(data['steps'][0]['items'][0]['data']['gasLimit'] * 2)
-        gas_cost = self.web3.eth.gas_price * gas
 
-        if balance - gas_cost < value:
-            value = balance - gas_cost
+        if balance < value:
+            value = balance
 
         if value <= 0:
             logger.error(f'Value bridge ETH - {value}\n')
@@ -63,10 +61,12 @@ class TunnelBridge(Wallet):
             'data': data['steps'][0]['items'][0]['data']['data'],
             'to': Web3.to_checksum_address(data['steps'][0]['items'][0]['data']['to']),
             'value': value,
-            'gas': gas,
             'nonce': self.web3.eth.get_transaction_count(self.address_wallet),
             **self.get_gas_price()
         }
+
+        gas = int(self.web3.eth.estimate_gas(dick) * 1.3)
+        dick.update({'gas': gas})
 
         self.send_transaction_and_wait(dick, f'Tunnel bridge {round(Web3.from_wei(value, "ether"), 5)} ETH || {self.chain} -> {self.chain_to}')
 
