@@ -277,7 +277,7 @@ if __name__ == '__main__':
             time.sleep(0.1)
             act = int(input('Choose an action: '))
 
-            if act in range(1, 22):
+            if act in range(1, 23):
                 break
 
         worker = Worker(act)
