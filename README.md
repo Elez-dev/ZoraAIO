@@ -42,45 +42,47 @@ python3.10 main.py
 
 1  - Official Bridge ETH -> Zora
 
-2  - Merkly GAS
+2  - Tunnel bridge
 
-3  - Zerius GAS
+3  - Merkly GAS
 
-4  - Mint NFT Zerius
+4  - Zerius GAS
 
-5  - Bridge NFT Zerius
+5  - Mint NFT Zerius
 
-6  - Mint NFT L2PASS
+6  - Bridge NFT Zerius
 
-7  - Bridge NFT L2PASS
+7  - Mint NFT L2PASS
 
-8  - Mint PYTHON ZORB в сети ZORA
+8  - Bridge NFT L2PASS
 
-9  - Mint PYTHON ZORB в сети BASE
+9  - Mint PYTHON ZORB в сети ZORA
 
-10 - Mint PYTHON ZORB в сети OPTIMISM
+10  - Mint PYTHON ZORB в сети BASE
 
-11 - Mint PYTHON ZORB через OpenSea в сети ZORA (FREE MINT)
+11 - Mint PYTHON ZORB в сети OPTIMISM
 
-12 - Mint PYTHON ZORB через OpenSea в сети BASE (FREE MINT)
+12 - Mint PYTHON ZORB через OpenSea в сети ZORA (FREE MINT)
 
-13 - Mint PYTHON ZORB через OpenSea в сети OPTIMISM (FREE MINT)
+13 - Mint PYTHON ZORB через OpenSea в сети BASE (FREE MINT)
 
-14 - Mint Custom NFT  (своя на выбор, либо те что заготовлены)
+14 - Mint PYTHON ZORB через OpenSea в сети OPTIMISM (FREE MINT)
 
-15 - Mint NFTS2ME (FREE MINT)
+15 - Mint Custom NFT  (своя на выбор, либо те что заготовлены)
 
-16 - Mint free NFT from Mint.fun
+16 - Mint NFTS2ME (FREE MINT)
 
-17 - Create contract NFT ERC1155 (Zora.co)
+17 - Mint free NFT from Mint.fun
 
-18 - Update NFT metadata
+18 - Create contract NFT ERC1155 (Zora.co)
 
-19 - Send money yourself
+19 - Update NFT metadata
 
-20 - Check wallets stats
+20 - Send money yourself
 
-21 - Custom routs
+21 - Check wallets stats
+
+22 - Custom routs
 
 
 ---
