@@ -15,7 +15,8 @@ SCAN = {
     'Optimism': 'https://optimistic.etherscan.io/tx/',
     'Polygon': 'https://polygonscan.com/tx/',
     'Base': 'https://basescan.org/tx/',
-    'Zora': 'https://explorer.zora.energy/tx/'
+    'Zora': 'https://explorer.zora.energy/tx/',
+    'Nova': 'https://nova.arbiscan.io/tx/'
 }
 
 
