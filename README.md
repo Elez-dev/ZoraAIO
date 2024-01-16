@@ -78,11 +78,13 @@ python3.10 main.py
 
 19 - Update NFT metadata
 
-20 - Send money yourself
+20 - Claim reward (Zora.co)
 
-21 - Check wallets stats
+21 - Send money yourself
 
-22 - Custom routs
+22 - Check wallets stats
+
+23 - Custom routs
 
 
 ---
