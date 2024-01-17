@@ -66,8 +66,8 @@ NUMBER_TRANS_7 = [1, 2]                            # Количество тра
 
 # 15 - Mint Custom NFT -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-URL_CUSTOM_NFT = ['https://zora.co/collect/zora:0xf0c8f615fdb98470052318a581913517415abda1/1', # Минт любых других NFT на Zora.co (Будет рандомная из списка)
-                  'https://zora.co/collect/zora:0xc3c5b2d37e7f58da932be74632cb386f44add722/1']  # Сюда пишем url NFT
+URL_CUSTOM_NFT = ['https://zora.co/collect/zora:0x651c54886153c96df8e0764abce9d13416c841f8/1', # Минт любых других NFT на Zora.co (Будет рандомная из списка)
+                  'https://zora.co/collect/zora:0x0de78cc261622a04784a642eaf9008870e169588/1']  # Сюда пишем url NFT
     
 QUANTITY_NFT_8 = [1, 1]                            # Количество NFT для минта
 NUMBER_TRANS_8 = [1, 1]                            # Количество транзакций             [min, max]
