@@ -69,9 +69,6 @@ class Worker:
         return chain_list[chain], nft_address, token_id
 
     def work(self):
-
-        self.get_chain_and_address()
-
         i = 0
         wallet_info_list = []
         for number, account in keys_list:
