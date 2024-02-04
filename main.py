@@ -227,8 +227,7 @@ class Worker:
 
             if self.action == 22:
                 set_mail = SetEmail(key, str_number, proxy)
-                # set_mail.link_email(mail)
-                set_mail.init_account()
+                set_mail.link_email(mail)
 
             if self.action == 23:
                 zora = ZoraScan(key, str_number, proxy)
