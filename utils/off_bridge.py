@@ -15,7 +15,7 @@ class ZoraBridge(Wallet):
         self.abi = js.load(open('./abi/of_bridge.txt'))
         self.contract = self.web3.eth.contract(address=self.address, abi=self.abi)
 
-    @exception_handler
+    @exception_handler('Official Zora bridge')
     def bridge(self):
         value = Web3.to_wei(round(random.uniform(OFF_ZORA_DEPOSIT[0], OFF_ZORA_DEPOSIT[1]), OFF_ZORA_DEPOSIT[2]), 'ether')
         gas = 60_000

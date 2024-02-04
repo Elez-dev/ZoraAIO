@@ -19,7 +19,8 @@ from utils.nft2me import NFT2ME
 from utils.mintfun import MintFun
 from utils.tunnel_bridge import TunnelBridge
 from utils.claim_reward import ClaimReward
-
+from utils.set_email import SetEmail
+import requests
 
 logger.remove()
 logger.add("./data/log.txt")
@@ -52,6 +53,13 @@ class Worker:
                 logger.error(error)
                 time.sleep(30)
                 continue
+    @staticmethod
+    def change_ip():
+        try:
+            res = requests.get(MOBILE_CHANGE_IP_LINK)
+            logger.info(res.text)
+        except Exception as error:
+            logger.error(error)
 
     @staticmethod
     def get_chain_and_address():
@@ -69,14 +77,13 @@ class Worker:
         return chain_list[chain], nft_address, token_id
 
     def work(self):
-
-        self.get_chain_and_address()
-
         i = 0
         wallet_info_list = []
         for number, account in keys_list:
             str_number = f'{number} / {all_wallets}'
-            key, proxy, address_nft = account
+            key, proxy, address_nft, mail = account
+            if MOBILE_PROXY is True:
+                proxy = MOBILE_DATA
             i += 1
             address = web3_eth.eth.account.from_key(key).address
             logger.info(f'Account #{i} || {address}\n')
@@ -219,12 +226,17 @@ class Worker:
                     sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
             if self.action == 22:
+                set_mail = SetEmail(key, str_number, proxy)
+                # set_mail.link_email(mail)
+                set_mail.init_account()
+
+            if self.action == 23:
                 zora = ZoraScan(key, str_number, proxy)
                 wallet_info_list.append(zora.get_nft_data())
                 time.sleep(0.1)
                 continue
 
-            if self.action == 23:
+            if self.action == 24:
 
                 rout = CustomRouter(key, str_number, proxy, address_nft, address)
                 if routes_shuffle is True:
@@ -241,7 +253,10 @@ class Worker:
             logger.success(f'Account completed, sleep and move on to the next one\n')
             sleeping(TIME_ACCOUNT_DELAY[0], TIME_ACCOUNT_DELAY[1])
 
-        if self.action == 22:
+            if MOBILE_PROXY is True:
+                self.change_ip()
+
+        if self.action == 23:
             ZoraScan.save_to_exel(wallet_info_list)
             return logger.success('The results are recorded in data/result.xlsx\n')
 
@@ -276,8 +291,9 @@ if __name__ == '__main__':
 19 - Update NFT metadata
 20 - Claim reward (Zora.co)
 21 - Send money yourself
-22 - Check wallets stats
-23 - Custom routs
+22 - Set email Zora.co
+23 - Check wallets stats
+24 - Custom routs
 ''')
 
             time.sleep(0.1)

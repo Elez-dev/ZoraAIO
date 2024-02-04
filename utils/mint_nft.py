@@ -31,7 +31,7 @@ class MintNFT(Wallet):
         self.abi_1155 = js.load(open('./abi/1155.txt'))
         self.abi_opensea = js.load(open('./abi/opensea.txt'))
 
-    @exception_handler
+    @exception_handler('Mint PYTHON ZORB on OpenSea || Zora chain')
     def mint_opensea_zorb_zora(self):
         quantity = random.randint(QUANTITY_NFT_7[0], QUANTITY_NFT_7[1])
         logger.info(f'Mint {quantity} PYTHON ZORB on OpenSea || Zora chain')
@@ -52,7 +52,7 @@ class MintNFT(Wallet):
 
         self.send_transaction_and_wait(txn, f'Mint {quantity} PYTHON ZORB on OpenSea')
 
-    @exception_handler
+    @exception_handler('Mint PYTHON ZORB on OpenSea || Base chain')
     def mint_opensea_zorb_base(self):
         quantity = random.randint(QUANTITY_NFT_7[0], QUANTITY_NFT_7[1])
         logger.info(f'Mint {quantity} PYTHON ZORB on OpenSea || Base chain')
@@ -73,7 +73,7 @@ class MintNFT(Wallet):
 
         self.send_transaction_and_wait(txn, f'Mint {quantity} PYTHON ZORB on OpenSea')
 
-    @exception_handler
+    @exception_handler('Mint PYTHON ZORB on OpenSea || Optimism chain')
     def mint_opensea_zorb_opt(self):
         quantity = random.randint(QUANTITY_NFT_7[0], QUANTITY_NFT_7[1])
         logger.info(f'Mint {quantity} PYTHON ZORB on OpenSea || Optimism chain')
@@ -94,7 +94,7 @@ class MintNFT(Wallet):
 
         self.send_transaction_and_wait(txn, f'Mint {quantity} PYTHON ZORB on OpenSea')
 
-    @exception_handler
+    @exception_handler('Mint PYTHON ZORB || Zora chain')
     def mint_zorb_zora(self):
         quantity = random.randint(QUANTITY_NFT_6[0], QUANTITY_NFT_6[1])
         logger.info(f'Mint {quantity} PYTHON ZORB || Zora chain')
@@ -118,7 +118,7 @@ class MintNFT(Wallet):
 
         self.send_transaction_and_wait(txn, f'Mint {quantity} PYTHON ZORB')
 
-    @exception_handler
+    @exception_handler('Mint {quantity} PYTHON ZORB || Base chain')
     def mint_zorb_base(self):
         quantity = random.randint(QUANTITY_NFT_6[0], QUANTITY_NFT_6[1])
         logger.info(f'Mint {quantity} PYTHON ZORB || Base chain')
@@ -142,10 +142,10 @@ class MintNFT(Wallet):
 
         self.send_transaction_and_wait(txn, f'Mint {quantity} PYTHON ZORB')
 
-    @exception_handler
+    @exception_handler('Mint PYTHON ZORB || Optimism chain')
     def mint_zorb_opt(self):
         quantity = random.randint(QUANTITY_NFT_6[0], QUANTITY_NFT_6[1])
-        logger.info('Mint PYTHON ZORB || Optimism chain')
+        logger.info(f'Mint {quantity} PYTHON ZORB || Optimism chain')
 
         contract = self.web3.eth.contract(address=Web3.to_checksum_address('0xcb4927957d33b0714a206721c0361638c2fc5f42'), abi=self.abi_1155)
         fee = contract.functions.mintFee().call() * quantity
@@ -166,7 +166,7 @@ class MintNFT(Wallet):
 
         self.send_transaction_and_wait(txn, f'Mint {quantity} PYTHON ZORB')
 
-    @exception_handler
+    @exception_handler('Mint Custom NFT')
     def mint_1155(self, address, nft_id):
         quantity = random.randint(QUANTITY_NFT_8[0], QUANTITY_NFT_8[1])
         logger.info(f'Mint {quantity} Custom NFT || {address}')
@@ -190,7 +190,7 @@ class MintNFT(Wallet):
 
         self.send_transaction_and_wait(txn, f'Mint {quantity} {name} NFT')
 
-    @exception_handler
+    @exception_handler('Update metadata NFT')
     def update_metadata(self, address):
 
         logger.info(f'Update metadata NFT || {address}')

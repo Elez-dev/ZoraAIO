@@ -3,12 +3,9 @@ import requests
 import pandas as pd
 from utils.retry import exception_handler
 from web3 import Web3
+from utils.func import crypto_prices
 
-url = 'https://api.coingecko.com/api/v3/simple/price'
-param = {'vs_currencies': 'usd', 'ids': 'ethereum'}
-res = requests.get(url, params=param, timeout=60)
-dat = res.json()
-ETH_PRICE = float(dat['ethereum']['usd'])
+ETH_PRICE = crypto_prices['ethereum']
 
 
 class ZoraScan(Wallet):

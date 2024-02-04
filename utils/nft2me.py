@@ -18,7 +18,7 @@ class NFT2ME(Wallet):
         self.abi = js.load(open('./abi/nft2me.txt'))
         self.contract = self.web3.eth.contract(address=Web3.to_checksum_address(random.choice(contracts)), abi=self.abi)
 
-    @exception_handler
+    @exception_handler('Mint on NFT2ME')
     def mint(self):
         quantity = random.randint(QUANTITY_NFT_15[0], QUANTITY_NFT_15[1])
         name = self.contract.functions.name().call()

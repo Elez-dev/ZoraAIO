@@ -32,7 +32,7 @@ class Merkly(Wallet):
         self.chain_to = chain_to
         self.contract = self.web3.eth.contract(address=contracts[self.chain], abi=self.abi)
 
-    @exception_handler
+    @exception_handler('Merkly refuel')
     def refuel(self):
 
         logger.info(f'Merkly refuel from {self.chain} to {self.chain_to}')

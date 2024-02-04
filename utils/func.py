@@ -7,6 +7,26 @@ from tqdm import tqdm
 import time
 import msoffcrypto
 import pandas as pd
+import requests
+import json as js
+
+crypto_prices = {}
+crypto_ids = ['ethereum', 'wmatic']
+
+url = 'https://api.coingecko.com/api/v3/simple/price'
+param = {'vs_currencies': 'usd'}
+
+for crypto_id in crypto_ids:
+    param['ids'] = crypto_id
+    res = requests.get(url, params=param, timeout=60)
+
+    jsres = js.loads(res.text)
+
+    if crypto_id in jsres:
+        crypto_prices[crypto_id] = float(jsres[crypto_id]['usd'])
+    else:
+        raise ValueError
+    time.sleep(5)
 
 
 def shuffle(wallets_list):
@@ -79,26 +99,29 @@ def get_accounts_data():
             private_key_evm = row["Private Key EVM"]
             proxy = row['PROXY']
             nft = row['ADDRESS NFT TO UPDATE METADATA']
+            email = row['EMAIL']
             accounts_data[int(index) + 1] = {
                 "private_key_evm": private_key_evm,
                 "proxy": proxy,
-                'nft': nft
+                'nft': nft,
+                'mail': email
             }
 
-        priv_key_evm, prx, nftt = [], [], []
+        priv_key_evm, prx, nftt, maill = [], [], [], []
         for k, v in accounts_data.items():
             priv_key_evm.append(v['private_key_evm'])
             prx.append(v['proxy'] if isinstance(v['proxy'], str) else None)
             nftt.append(v['nft'] if isinstance(v['nft'], str) else None)
+            maill.append(v['mail'] if isinstance(v['mail'], str) else None)
 
-        return combine_lists(priv_key_evm, prx, nftt)
+        return combine_lists(priv_key_evm, prx, nftt, maill)
 
 
-def combine_lists(list1, list2, list3):
+def combine_lists(list1, list2, list3, list4):
     combined_list = []
     length = len(list1)
 
     for i in range(length):
-        combined_list.append((list1[i], list2[i], list3[i]))
+        combined_list.append((list1[i], list2[i], list3[i], list4[i]))
 
     return combined_list

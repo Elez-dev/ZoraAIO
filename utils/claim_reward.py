@@ -13,7 +13,7 @@ class ClaimReward(Wallet):
         self.abi = js.load(open('./abi/claim_reward.txt'))
         self.contract = self.web3.eth.contract(address=self.address, abi=self.abi)
 
-    @exception_handler
+    @exception_handler('Claim reward')
     def claim(self):
         logger.info('Claim reward Zora.co')
 

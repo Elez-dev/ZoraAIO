@@ -10,15 +10,9 @@ chain_id = {
     'Arbitrum': 42161,
     'Optimism': 10,
     'Nova': 42170,
-    'Base': 8453
-}
-
-url = {
-    'Zora'    : 'https://api-zora.reservoir.tools/execute/call/v1',
-    'Arbitrum': 'https://api-arbitrum.reservoir.tools/execute/call/v1',
-    'Optimism': 'https://api-optimism.reservoir.tools/execute/call/v1',
-    'Nova'    : 'https://api-arbitrum-nova.reservoir.tools/execute/call/v1',
-    'Base'    : 'https://api-base.reservoir.tools/execute/call/v1'
+    'Base': 8453,
+    'zkSync': 324,
+    'Linea': 59144
 }
 
 
@@ -28,7 +22,7 @@ class TunnelBridge(Wallet):
         super().__init__(private_key, chain_from, number, proxy)
         self.chain_to = chain_to
 
-    @exception_handler
+    @exception_handler('Tunnel bridge')
     def bridge(self):
         logger.info(f'Tunnel bridge || {self.chain} -> {self.chain_to}')
         value = Web3.to_wei(round(random.uniform(VALUE_TUNNEL[0], VALUE_TUNNEL[1]), VALUE_TUNNEL[2]), 'ether')
@@ -36,6 +30,7 @@ class TunnelBridge(Wallet):
 
         json = {
             'originChainId': chain_id[self.chain],
+            'destinationChainId': chain_id[self.chain_to],
             'user': self.address_wallet,
             'txs': [{
                 'data': '0x',
@@ -44,7 +39,7 @@ class TunnelBridge(Wallet):
             }]
         }
 
-        data = self.get_api_call_data_post(url[self.chain_to], json)
+        data = self.get_api_call_data_post('https://api.relay.link/execute/call', json)
 
         value = int(data['steps'][0]['items'][0]['data']['value'])
 

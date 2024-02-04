@@ -40,7 +40,7 @@ class L2Pass(Wallet):
         tokens_arr = [self.contract_bridge.functions.tokenOfOwnerByIndex(self.address_wallet, i).call() for i in range(count)]
         return random.choice(tokens_arr)
 
-    @exception_handler
+    @exception_handler('Mint NFT on L2Pass')
     def mint_nft(self):
 
         logger.info(f'Mint NFT {self.chain} on L2Pass')
@@ -58,7 +58,7 @@ class L2Pass(Wallet):
 
         self.send_transaction_and_wait(txn, f'Mint NFT {self.chain} on L2Pass')
 
-    @exception_handler
+    @exception_handler('Bridge NFT')
     def bridge_nft(self, token_id):
         logger.info(f'Bridge {token_id} NFT || {self.chain} -> {self.chain_to}')
 

@@ -7,7 +7,8 @@ from requests.adapters import Retry
 from utils.retry_wallet import exception_handler_wallet
 import requests
 from loguru import logger
-from settings import ZORA_GASPRICE_PRESCALE, BASE_GASPRICE_PRESCALE
+from settings import ZORA_GASPRICE_PRESCALE, BASE_GASPRICE_PRESCALE, TG_BOT_SEND
+from utils.tg_bot import TgBot
 
 SCAN = {
     'Ethereum': 'https://etherscan.io/tx/',
@@ -16,11 +17,13 @@ SCAN = {
     'Polygon': 'https://polygonscan.com/tx/',
     'Base': 'https://basescan.org/tx/',
     'Zora': 'https://explorer.zora.energy/tx/',
-    'Nova': 'https://nova.arbiscan.io/tx/'
+    'Nova': 'https://nova.arbiscan.io/tx/',
+    'zkSync': 'https://era.zksync.network/tx/',
+    'Linea': 'https://lineascan.build/tx/'
 }
 
 
-class Wallet:
+class Wallet(TgBot):
 
     def __init__(self, private_key, chain, number, proxy):
         self.private_key = private_key
@@ -29,7 +32,8 @@ class Wallet:
         self.proxy = proxy
         self.web3 = self.get_web3(chain)
         self.scan = self.get_scan(chain)
-        self.address_wallet = self.web3.eth.account.from_key(private_key).address
+        self.account = self.web3.eth.account.from_key(private_key)
+        self.address_wallet = self.account.address
 
     def get_web3(self, chain):
         retries = Retry(total=10, backoff_factor=1, status_forcelist=[500, 502, 503, 504])
@@ -76,7 +80,12 @@ class Wallet:
             logger.success('The transaction was successfully mined')
         else:
             logger.error("Transaction failed, I'm trying again")
+            if TG_BOT_SEND is True:
+                TgBot.send_message_error(self, self.number, message, self.address_wallet, "Transaction failed, I'm trying again")
             raise ValueError('')
+
+        if TG_BOT_SEND is True:
+            TgBot.send_message_success(self, self.number, message, self.address_wallet, f'{self.scan}{tx_hash.hex()}')
 
         logger.success(f'[{self.number}] {message} || {self.scan}{tx_hash.hex()}\n')
         return tx_hash
@@ -92,7 +101,7 @@ class Wallet:
                 pass
 
         if self.chain == 'Zora':
-            return {'maxFeePerGas': int(self.web3.eth.gas_price * ZORA_GASPRICE_PRESCALE), 'maxPriorityFeePerGas': int(self.web3.eth.max_priority_fee * ZORA_GASPRICE_PRESCALE)}
+            return {'maxFeePerGas': ZORA_GASPRICE_PRESCALE, 'maxPriorityFeePerGas': int(ZORA_GASPRICE_PRESCALE * 0.01)}
         elif self.chain == 'Base':
             return {'maxFeePerGas': int(self.web3.eth.gas_price * BASE_GASPRICE_PRESCALE), 'maxPriorityFeePerGas': int(self.web3.eth.max_priority_fee * BASE_GASPRICE_PRESCALE)}
         return {'maxFeePerGas': self.web3.eth.gas_price, 'maxPriorityFeePerGas': self.web3.eth.max_priority_fee}

@@ -40,7 +40,7 @@ class CreateContract(Wallet):
         random_string = ''.join(random.choice(characters) for _ in range(7))
         return random_string
 
-    @exception_handler
+    @exception_handler('Create NFT Zora.co')
     def create_contarct(self):
         logger.info('Create NFT Zora.co')
 
@@ -69,7 +69,7 @@ class CreateContract(Wallet):
         addr = self.save_address(tx_hash)
         self.write_address(addr)
 
-    @exception_handler
+    @exception_handler()
     def save_address(self, tx_hash):
 
         txn_receipt = self.web3.eth.get_transaction_receipt(tx_hash)
@@ -80,7 +80,7 @@ class CreateContract(Wallet):
 
         return addres_nft
 
-    @exception_handler
+    @exception_handler()
     def write_address(self, address):
         workbook = openpyxl.load_workbook('./data/accounts_data.xlsx')
 

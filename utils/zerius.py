@@ -52,7 +52,7 @@ class Zerius(Wallet):
         tokens_arr = [self.contract_bridge.functions.tokenOfOwnerByIndex(self.address_wallet, i).call() for i in range(count)]
         return random.choice(tokens_arr)
 
-    @exception_handler
+    @exception_handler('Mint NFT on Zerius')
     def mint_nft(self):
 
         logger.info(f'Mint NFT {self.chain} on Zerius')
@@ -70,7 +70,7 @@ class Zerius(Wallet):
 
         self.send_transaction_and_wait(txn, f'Mint NFT {self.chain} on Zerius')
 
-    @exception_handler
+    @exception_handler('Bridge NFT on Zerius')
     def bridge_nft(self, token_id):
         logger.info(f'Bridge {token_id} NFT || {self.chain} -> {self.chain_to}')
 
@@ -112,7 +112,7 @@ class Zerius(Wallet):
 
         self.send_transaction_and_wait(contract_txn, f'Bridge {token_id} NFT || {self.chain} -> {self.chain_to}')
 
-    @exception_handler
+    @exception_handler('Zerius refuel')
     def refuel(self):
         logger.info(f'Zerius refuel from {self.chain} to {self.chain_to}')
 
