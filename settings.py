@@ -4,8 +4,8 @@ EXCEL_PASSWORD  = False                            # Если ставите п�
 SHUFFLE_WALLETS = True                             # Перемешка кошельков                         || True/ False
 
 TG_BOT_SEND = False                                # Включить уведомления в тг или нет           || True/ False
-TG_TOKEN = '5410530718:AAEk90lw7IkjLFuGY3FyvPO9S5hioRLFBtk'                                      # API токен тг-бота - создать его можно здесь - https://t.me/BotFather
-TG_ID = 627874129                                          # id твоего телеграмма можно узнать тут       - https://t.me/getmyid_bot
+TG_TOKEN = ''                                      # API токен тг-бота - создать его можно здесь - https://t.me/BotFather
+TG_ID = 0                                          # id твоего телеграмма можно узнать тут       - https://t.me/getmyid_bot
 
 CHAIN_RPC = {
     Arbitrum: 'https://1rpc.io/arb',
