@@ -101,7 +101,7 @@ class Wallet(TgBot):
                 pass
 
         if self.chain == 'Zora':
-            return {'maxFeePerGas': ZORA_GASPRICE_PRESCALE, 'maxPriorityFeePerGas': int(ZORA_GASPRICE_PRESCALE * 0.01)}
+            return {'maxFeePerGas': Web3.to_wei(ZORA_GASPRICE_PRESCALE, 'gwei'), 'maxPriorityFeePerGas': Web3.to_wei(ZORA_GASPRICE_PRESCALE, 'gwei')}
         elif self.chain == 'Base':
             return {'maxFeePerGas': int(self.web3.eth.gas_price * BASE_GASPRICE_PRESCALE), 'maxPriorityFeePerGas': int(self.web3.eth.max_priority_fee * BASE_GASPRICE_PRESCALE)}
         return {'maxFeePerGas': self.web3.eth.gas_price, 'maxPriorityFeePerGas': self.web3.eth.max_priority_fee}

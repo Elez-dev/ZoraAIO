@@ -20,6 +20,7 @@ from utils.mintfun import MintFun
 from utils.tunnel_bridge import TunnelBridge
 from utils.claim_reward import ClaimReward
 from utils.set_email import SetEmail
+from utils.create_merkl_contract import DeployContract
 import requests
 
 logger.remove()
@@ -230,12 +231,16 @@ class Worker:
                 set_mail.link_email(mail)
 
             if self.action == 23:
+                crt = DeployContract(key, Zora, str_number, proxy)
+                crt.create_contarct()
+
+            if self.action == 24:
                 zora = ZoraScan(key, str_number, proxy)
                 wallet_info_list.append(zora.get_nft_data())
                 time.sleep(0.1)
                 continue
 
-            if self.action == 24:
+            if self.action == 25:
 
                 rout = CustomRouter(key, str_number, proxy, address_nft, address)
                 if routes_shuffle is True:
@@ -255,7 +260,7 @@ class Worker:
             if MOBILE_PROXY is True:
                 self.change_ip()
 
-        if self.action == 23:
+        if self.action == 24:
             ZoraScan.save_to_exel(wallet_info_list)
             return logger.success('The results are recorded in data/result.xlsx\n')
 
@@ -291,8 +296,9 @@ if __name__ == '__main__':
 20 - Claim reward (Zora.co)
 21 - Send money yourself
 22 - Set email Zora.co
-23 - Check wallets stats
-24 - Custom routs
+23 - Deploy contract
+24 - Check wallets stats
+25 - Custom routs
 ''')
 
             time.sleep(0.1)

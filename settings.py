@@ -4,14 +4,14 @@ EXCEL_PASSWORD  = False                            # Если ставите п�
 SHUFFLE_WALLETS = True                             # Перемешка кошельков                         || True/ False
 
 TG_BOT_SEND = False                                # Включить уведомления в тг или нет           || True/ False
-TG_TOKEN = '5410530718:AAEk90lw7IkjLFuGY3FyvPO9S5hioRLFBtk'                                      # API токен тг-бота - создать его можно здесь - https://t.me/BotFather
-TG_ID = 627874129                                          # id твоего телеграмма можно узнать тут       - https://t.me/getmyid_bot
+TG_TOKEN = ''                                      # API токен тг-бота - создать его можно здесь - https://t.me/BotFather
+TG_ID = 0                                          # id твоего телеграмма можно узнать тут       - https://t.me/getmyid_bot
 
 CHAIN_RPC = {
     Arbitrum: 'https://1rpc.io/arb',
     Optimism: 'https://1rpc.io/op',
     Polygon : 'https://1rpc.io/matic',
-    Zora    : 'https://rpc.zora.energy',         # https://zora.rpc.thirdweb.com
+    Zora    : 'https://zora.rpc.thirdweb.com',         # https://zora.rpc.thirdweb.com
     Ethereum: 'https://rpc.ankr.com/eth',
     Base    : 'https://rpc.ankr.com/base',
     Nova    : 'https://rpc.ankr.com/arbitrumnova',
@@ -20,7 +20,7 @@ CHAIN_RPC = {
 }
 
 MAX_GAS_ETH = 400                                   # gas в gwei (смотреть здесь : https://etherscan.io/gastracker)
-ZORA_GASPRICE_PRESCALE = 0.00001                   # Использовать Max base fee и Priority fee для газа в Zora, экономия 0.3-0.5$
+ZORA_GASPRICE_PRESCALE = 0.001                    # Использовать Max base fee и Priority fee для газа в Zora, экономия 0.3-0.5$
 BASE_GASPRICE_PRESCALE = 0.05                      # Использовать Max base fee и Priority fee для газа в Base
 
 RETRY = 5                                          # Количество попыток при ошибках / фейлах
@@ -29,7 +29,7 @@ TIME_ACCOUNT_DELAY = [200, 300]                    # Задержка между
 TIME_DELAY_ERROR = [10, 20]                        # Задержка при ошибках / фейлах [min, max]
 
 MOBILE_PROXY = False                                # Если юзаете мобильные прокси -> True, если обычные или VPN -> False
-MOBILE_DATA = 'login:pass@ip:port'                 # Сюда пишем данные в формате login:pass@ip:port
+MOBILE_DATA = 'login:pass@ip:port'                 # Сюда пишем проксю в формате login:pass@ip:port
 MOBILE_CHANGE_IP_LINK = ''                         # Сюда пишем ссылку для смены IP
 
 # 1 - Официальный мост https://bridge.zora.energy/ -----------------------------------------------------------------------------------------------------------------------------------------------
@@ -135,5 +135,7 @@ VALUE_REFUEL = {
     Polygon: [1.01, 1.5, 3],       # [min, max, round_decimal]
     'Other': [0.00001, 0.0001, 6]  # [min, max, round_decimal] Здесь сумма относится ко всем остальным сетям, тк для оплаты используется ETH
 }
+
+# Module 22 - IMAP сервер для почт
 
 IMAP_SERVER = 'imap.rambler.ru'
