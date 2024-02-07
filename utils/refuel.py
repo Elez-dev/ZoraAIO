@@ -19,6 +19,7 @@ chain_id = {
 
 class Refuel(Wallet):
     def __init__(self, private_key, chain_to, number, proxy):
+        self.private_key = private_key
         super().__init__(private_key, self.get_refuel_chain(), number, proxy)
         self.chain_to = chain_to
 
@@ -29,7 +30,7 @@ class Refuel(Wallet):
         chan = None
 
         for chain in CHAIN_FROM_REFUEL:
-            web3 = self.get_web3(chain)
+            web3 = self.get_web3_refuel(chain)
             address_wallet = web3.eth.account.from_key(self.private_key).address
             balance = web3.eth.get_balance(address_wallet)
             if chain == 'Polygon':
@@ -50,7 +51,11 @@ class Refuel(Wallet):
 
     @exception_handler_refuel
     def refuel(self):
+        if self.chain == self.chain_to:
+            return 'error'
+
         logger.info(f'Tunnel bridge || {self.chain} -> {self.chain_to}')
+
         if self.chain == 'Polygon':
             value = VALUE_REFUEL['Polygon']
             token = 'Matic'

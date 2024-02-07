@@ -47,6 +47,15 @@ class Wallet(TgBot):
         return Web3(Web3.HTTPProvider(CHAIN_RPC[chain], request_kwargs={'timeout': 60}, session=session))
 
     @staticmethod
+    def get_web3_refuel(chain):
+        retries = Retry(total=10, backoff_factor=1, status_forcelist=[500, 502, 503, 504])
+        adapter = requests.adapters.HTTPAdapter(max_retries=retries)
+        session = requests.Session()
+        session.mount('http://', adapter)
+        session.mount('https://', adapter)
+        return Web3(Web3.HTTPProvider(CHAIN_RPC[chain], request_kwargs={'timeout': 60}, session=session))
+
+    @staticmethod
     def get_scan(chain):
         return SCAN[chain]
 

@@ -29,7 +29,7 @@ def exception_handler(label=''):
 
                 except Exception as error:
                     if isinstance(error.args[0], dict):
-                        if 'insufficien' in error.args[0]['message']:
+                        if 'insufficien' in error.args[0]['message'] or 'required exceeds allowance' in error.args[0]['message']:
                             logger.error('Ошибка, скорее всего нехватает комсы\n')
                             if TG_BOT_SEND is True:
                                 TgBot.send_message_error(self, self.number, label, self.address_wallet,
@@ -37,7 +37,9 @@ def exception_handler(label=''):
 
                             if REFUEL is True:
                                 tun = Refuel(self.private_key, self.chain, self.number, self.proxy)
-                                tun.refuel()
+                                res = tun.refuel()
+                                if res == 'error':
+                                    return 'balance'
                                 sleeping(100, 200)
                                 continue
 

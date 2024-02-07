@@ -13,7 +13,6 @@ from email.header import decode_header
 from settings import IMAP_SERVER
 from utils.func import sleeping
 import re
-from mimesis import Person
 from utils.retry import exception_handler
 
 
