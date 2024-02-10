@@ -31,7 +31,8 @@ web3_eth = Web3(Web3.HTTPProvider('https://rpc.ankr.com/eth', request_kwargs={'t
 chain_list = {
     'zora': Zora,
     'base': Base,
-    'oeth': Optimism
+    'oeth': Optimism,
+    'arb' : Arbitrum
 }
 
 
