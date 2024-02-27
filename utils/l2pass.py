@@ -2,7 +2,6 @@ from utils.wallet import Wallet
 from loguru import logger
 import json as js
 from web3 import Web3
-from eth_abi.packed import encode_packed
 import random
 from utils.retry import exception_handler
 
