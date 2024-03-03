@@ -12,7 +12,8 @@ chain_id = {
     'Nova': 42170,
     'Base': 8453,
     'zkSync': 324,
-    'Linea': 59144
+    'Linea': 59144,
+    'Blast': 81457
 }
 
 
@@ -22,9 +23,9 @@ class TunnelBridge(Wallet):
         super().__init__(private_key, chain_from, number, proxy)
         self.chain_to = chain_to
 
-    @exception_handler('Tunnel bridge')
+    @exception_handler('Relay bridge')
     def bridge(self):
-        logger.info(f'Tunnel bridge || {self.chain} -> {self.chain_to}')
+        logger.info(f'Relay bridge || {self.chain} -> {self.chain_to}')
         value = Web3.to_wei(round(random.uniform(VALUE_TUNNEL[0], VALUE_TUNNEL[1]), VALUE_TUNNEL[2]), 'ether')
         balance = self.get_native_balance()
 
@@ -63,5 +64,5 @@ class TunnelBridge(Wallet):
         gas = int(self.web3.eth.estimate_gas(dick) * 1.3)
         dick.update({'gas': gas})
 
-        self.send_transaction_and_wait(dick, f'Tunnel bridge {round(Web3.from_wei(value, "ether"), 5)} ETH || {self.chain} -> {self.chain_to}')
+        self.send_transaction_and_wait(dick, f'Relay bridge {round(Web3.from_wei(value, "ether"), 5)} ETH || {self.chain} -> {self.chain_to}')
 

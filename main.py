@@ -1,29 +1,12 @@
 import random
 from loguru import logger
-from utils.func import get_accounts_data, shuffle
 import sys
 import time
-from utils.func import sleeping
 from web3 import Web3
-from settings import *
-from utils.off_bridge import ZoraBridge
-from utils.merkly import Merkly
-from utils.zerius import Zerius
-from utils.mint_nft import MintNFT
-from utils.wallet import Wallet
-from utils.walet_stats import ZoraScan
-from utils.custom_route import CustomRouter
-from utils.create_contract import CreateContract
-from utils.l2pass import L2Pass
-from utils.nft2me import NFT2ME
-from utils.mintfun import MintFun
-from utils.tunnel_bridge import TunnelBridge
-from utils.claim_reward import ClaimReward
-from utils.set_email import SetEmail
-from utils.create_merkl_contract import DeployContract
-from utils.wrap import WrapETH
+from utils import *
 import requests
 import json
+from settings import *
 
 logger.remove()
 logger.add("./data/log.txt")
@@ -31,10 +14,11 @@ logger.add(sys.stdout, format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <leve
 web3_eth = Web3(Web3.HTTPProvider('https://rpc.ankr.com/eth', request_kwargs={'timeout': 60}))
 
 chain_list = {
-    'zora': Zora,
-    'base': Base,
-    'oeth': Optimism,
-    'arb' : Arbitrum
+    'zora' : Zora,
+    'base' : Base,
+    'oeth' : Optimism,
+    'arb'  : Arbitrum,
+    'blast': Blast
 }
 
 
@@ -46,7 +30,7 @@ class Worker:
     def chek_gas_eth():
         while True:
             try:
-                res = int(round(Web3.from_wei(web3_eth.eth.gas_price, 'gwei')))
+                res = int(Web3.from_wei(web3_eth.eth.gas_price, 'gwei'))
                 logger.info(f'Газ сейчас - {res} gwei\n')
                 if res <= MAX_GAS_ETH:
                     break
@@ -79,13 +63,10 @@ class Worker:
 
             for subarray in routes:
                 if isinstance(subarray, list):
-                    # Если подмассив - это список, выбираем случайный элемент
                     new_routes.append(random.choice(subarray))
                 elif isinstance(subarray, str):
-                    # Если подмассив - это строка, просто добавляем его в новый массив
                     new_routes.append(subarray)
                 else:
-                    # Другие случаи (например, None) можно обработать по вашему усмотрению
                     new_routes.append(None)
 
             dick[address] = {
@@ -115,7 +96,7 @@ class Worker:
 
     def work(self):
 
-        if self.action == 25:
+        if self.action == 30:
             return self.generate_route()
 
         i = 0
@@ -177,6 +158,16 @@ class Worker:
                 wr.unwrap()
 
             if self.action == 11:
+                uniswap = Uniswap(key, str_number, proxy)
+                number_trans = random.randint(NUMBER_TRANS_11[0], NUMBER_TRANS_11[1])
+                logger.info(f'Number of transactions - {number_trans}\n')
+                for _ in range(number_trans):
+                    uniswap.buy_token()
+                    sleeping(TIME_DELAY[0], TIME_DELAY[1])
+                    uniswap.sold_token()
+                    sleeping(TIME_DELAY[0], TIME_DELAY[1])
+
+            if self.action == 12:
                 number_trans = random.randint(NUMBER_TRANS_6[0], NUMBER_TRANS_6[1])
                 logger.info(f'Number of transactions - {number_trans}\n')
                 zora = MintNFT(key, Zora, str_number, proxy)
@@ -184,7 +175,7 @@ class Worker:
                     zora.mint_zorb_zora()
                     sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
-            if self.action == 12:
+            if self.action == 13:
                 number_trans = random.randint(NUMBER_TRANS_6[0], NUMBER_TRANS_6[1])
                 logger.info(f'Number of transactions - {number_trans}\n')
                 zora = MintNFT(key, Base, str_number, proxy)
@@ -192,7 +183,7 @@ class Worker:
                     zora.mint_zorb_base()
                     sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
-            if self.action == 13:
+            if self.action == 14:
                 number_trans = random.randint(NUMBER_TRANS_6[0], NUMBER_TRANS_6[1])
                 logger.info(f'Number of transactions - {number_trans}\n')
                 zora = MintNFT(key, Optimism, str_number, proxy)
@@ -200,7 +191,23 @@ class Worker:
                     zora.mint_zorb_opt()
                     sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
-            if self.action == 14:
+            if self.action == 15:
+                number_trans = random.randint(NUMBER_TRANS_6[0], NUMBER_TRANS_6[1])
+                logger.info(f'Number of transactions - {number_trans}\n')
+                zora = MintNFT(key, Blast, str_number, proxy)
+                for _ in range(number_trans):
+                    zora.mint_zorb_blast()
+                    sleeping(TIME_DELAY[0], TIME_DELAY[1])
+
+            if self.action == 16:
+                number_trans = random.randint(NUMBER_TRANS_6[0], NUMBER_TRANS_6[1])
+                logger.info(f'Number of transactions - {number_trans}\n')
+                zora = MintNFT(key, Arbitrum, str_number, proxy)
+                for _ in range(number_trans):
+                    zora.mint_zorb_arbitrum()
+                    sleeping(TIME_DELAY[0], TIME_DELAY[1])
+
+            if self.action == 17:
                 number_trans = random.randint(NUMBER_TRANS_7[0], NUMBER_TRANS_7[1])
                 logger.info(f'Number of transactions - {number_trans}\n')
                 zora = MintNFT(key, Zora, str_number, proxy)
@@ -209,7 +216,7 @@ class Worker:
                     zora.mint_opensea_zorb_zora()
                     sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
-            if self.action == 15:
+            if self.action == 18:
                 number_trans = random.randint(NUMBER_TRANS_7[0], NUMBER_TRANS_7[1])
                 logger.info(f'Number of transactions - {number_trans}\n')
                 zora = MintNFT(key, Base, str_number, proxy)
@@ -218,7 +225,7 @@ class Worker:
                     zora.mint_opensea_zorb_base()
                     sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
-            if self.action == 16:
+            if self.action == 19:
                 number_trans = random.randint(NUMBER_TRANS_7[0], NUMBER_TRANS_7[1])
                 logger.info(f'Number of transactions - {number_trans}\n')
                 zora = MintNFT(key, Optimism, str_number, proxy)
@@ -227,7 +234,7 @@ class Worker:
                     zora.mint_opensea_zorb_opt()
                     sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
-            if self.action == 17:
+            if self.action == 20:
                 number_trans = random.randint(NUMBER_TRANS_8[0], NUMBER_TRANS_8[1])
                 logger.info(f'Number of transactions - {number_trans}\n')
                 for _ in range(number_trans):
@@ -236,7 +243,7 @@ class Worker:
                     zora.mint_1155(add, id_nft)
                     sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
-            if self.action == 18:
+            if self.action == 21:
                 number_trans = random.randint(NUMBER_TRANS_15[0], NUMBER_TRANS_15[1])
                 logger.info(f'Number of transactions - {number_trans}\n')
                 for _ in range(number_trans):
@@ -244,7 +251,7 @@ class Worker:
                     zora.mint()
                     sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
-            if self.action == 19:
+            if self.action == 22:
                 number_trans = random.randint(NUMBER_TRANS_16[0], NUMBER_TRANS_16[1])
                 logger.info(f'Number of transactions - {number_trans}\n')
                 mintfun = MintFun(key, Zora, str_number, proxy)
@@ -252,11 +259,11 @@ class Worker:
                     mintfun.mint()
                     sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
-            if self.action == 20:
+            if self.action == 23:
                 contr = CreateContract(key, Zora, str_number, proxy)
                 contr.create_contarct()
 
-            if self.action == 21:
+            if self.action == 24:
                 if address_nft is None:
                     logger.error('Address NFT is empty\n')
                     continue
@@ -265,11 +272,11 @@ class Worker:
                 if res is False:
                     continue
 
-            if self.action == 22:
+            if self.action == 25:
                 clm = ClaimReward(key, Zora, str_number, proxy)
                 clm.claim()
 
-            if self.action == 23:
+            if self.action == 26:
                 wal = Wallet(key, Zora, str_number, proxy)
                 number_trans = random.randint(NUMBER_TRANS_YOURSELF[0], NUMBER_TRANS_YOURSELF[1])
                 logger.info(f'Number of transactions to yourself - {number_trans}\n')
@@ -278,21 +285,21 @@ class Worker:
                     wal.transfer_native(address)
                     sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
-            if self.action == 24:
+            if self.action == 27:
                 set_mail = SetEmail(key, str_number, proxy)
                 set_mail.link_email(mail)
 
-            if self.action == 25:
+            if self.action == 28:
                 crt = DeployContract(key, Zora, str_number, proxy)
                 crt.create_contarct()
 
-            if self.action == 26:
+            if self.action == 29:
                 zora = ZoraScan(key, str_number, proxy)
                 wallet_info_list.append(zora.get_nft_data())
                 time.sleep(0.1)
                 continue
 
-            if self.action == 27:
+            if self.action == 31:
 
                 rout = CustomRouter(key, str_number, proxy, address_nft, address)
                 data = json.load(open('./data/router.json'))
@@ -329,7 +336,7 @@ class Worker:
             if MOBILE_PROXY is True:
                 self.change_ip()
 
-        if self.action == 26:
+        if self.action == 29:
             ZoraScan.save_to_exel(wallet_info_list)
             return logger.success('The results are recorded in data/result.xlsx\n')
 
@@ -344,7 +351,7 @@ if __name__ == '__main__':
         while True:
             logger.info('''
 1  - Official Bridge ETH -> Zora
-2  - Tunnel bridge
+2  - Relay bridge
 
 3  - Merkly GAS
 4  - Zerius GAS
@@ -352,34 +359,40 @@ if __name__ == '__main__':
 6  - Bridge NFT Zerius
 7  - Mint NFT L2PASS
 8  - Bridge NFT L2PASS
+
 9  - Wrap ETH
 10 - Unwrap ETH 
+11 - Buy + Sold token
 
-11 - Mint PYTHON ZORB в сети ZORA     (С официальной комиссией ZORA 0.000777 ETH)
-12 - Mint PYTHON ZORB в сети BASE     (С официальной комиссией ZORA 0.000777 ETH)
-13 - Mint PYTHON ZORB в сети OPTIMISM (С официальной комиссией ZORA 0.000777 ETH)
-14 - Mint PYTHON ZORB через OpenSea в сети ZORA     (FREE MINT)
-15 - Mint PYTHON ZORB через OpenSea в сети BASE     (FREE MINT)
-16 - Mint PYTHON ZORB через OpenSea в сети OPTIMISM (FREE MINT)
-17 - Mint Custom NFT  (Zora.co)
-18 - Mint NFTS2ME (FREE MINT)
-19 - Mint free NFT from Mint.fun
-20 - Create contract NFT ERC1155 (Zora.co)
-21 - Update NFT metadata
-22 - Claim reward (Zora.co)
-23 - Send money yourself
-24 - Set email Zora.co
-25 - Deploy contract
-26 - Check wallets stats
+12 - Mint PYTHON ZORB в сети ZORA        (С официальной комиссией ZORA 0.000777 ETH)
+13 - Mint PYTHON ZORB в сети BASE        (С официальной комиссией ZORA 0.000777 ETH)
+14 - Mint PYTHON ZORB в сети OPTIMISM    (С официальной комиссией ZORA 0.000777 ETH)
+15 - Mint PYTHON ZORB в сети Blast       (С официальной комиссией ZORA 0.000777 ETH)
+16 - Mint THE AMBASSADOR в сети Arbitrum (С официальной комиссией ZORA 0.000777 ETH)
 
-27 - Generate custom routes
-28 - Run custom routs
+17 - Mint PYTHON ZORB через OpenSea в сети ZORA     (FREE MINT)
+18 - Mint PYTHON ZORB через OpenSea в сети BASE     (FREE MINT)
+19 - Mint PYTHON ZORB через OpenSea в сети OPTIMISM (FREE MINT)
+
+20 - Mint Custom NFT  (Zora.co)
+21 - Mint NFTS2ME (FREE MINT)
+22 - Mint free NFT from Mint.fun
+23 - Create contract NFT ERC1155 (Zora.co)
+24 - Update NFT metadata
+25 - Claim reward (Zora.co)
+26 - Send money yourself
+27 - Set email Zora.co
+28 - Deploy contract
+29 - Check wallets stats
+
+30 - Generate custom routes
+31 - Run custom routs
 ''')
 
             time.sleep(0.1)
             act = int(input('Choose an action: '))
 
-            if act in range(1, 29):
+            if act in range(1, 31):
                 break
 
         worker = Worker(act)

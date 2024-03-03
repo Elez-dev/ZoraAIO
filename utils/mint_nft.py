@@ -94,6 +94,54 @@ class MintNFT(Wallet):
 
         self.send_transaction_and_wait(txn, f'Mint {quantity} PYTHON ZORB on OpenSea')
 
+    @exception_handler('Mint PYTHON ZORB || Blast chain')
+    def mint_zorb_blast(self):
+        quantity = random.randint(QUANTITY_NFT_6[0], QUANTITY_NFT_6[1])
+        logger.info(f'Mint {quantity} PYTHON ZORB || Blast chain')
+
+        contract = self.web3.eth.contract(address=Web3.to_checksum_address('0xA83aa4479528Ae4058290810962c5e5b54699C6C'), abi=self.abi_1155)
+        fee = contract.functions.mintFee().call() * quantity
+        dick = {
+            'from': self.address_wallet,
+            'value': fee,
+            'nonce': self.web3.eth.get_transaction_count(self.address_wallet),
+            **self.get_gas_price()
+        }
+
+        txn = contract.functions.mintWithRewards(
+            Web3.to_checksum_address('0x3eb144aee170bf62fda1536e38af51f08e34a5d0'),
+            1,
+            quantity,
+            '0x000000000000000000000000' + self.address_wallet[2:],
+            Web3.to_checksum_address('0xCC05E5454D8eC8F0873ECD6b2E3da945B39acA6C')
+        ).build_transaction(dick)
+
+        self.send_transaction_and_wait(txn, f'Mint {quantity} PYTHON ZORB')
+
+    @exception_handler('Mint THE AMBASSADOR || Arbitrum chain')
+    def mint_zorb_arbitrum(self):
+        quantity = random.randint(QUANTITY_NFT_6[0], QUANTITY_NFT_6[1])
+        logger.info(f'Mint {quantity} THE AMBASSADOR || Arbitrum chain')
+
+        contract = self.web3.eth.contract(address=Web3.to_checksum_address('0x6daf8bc7ec5300f31da63dd833cfabb1e4538335'), abi=self.abi_1155)
+        fee = contract.functions.mintFee().call() * quantity
+        dick = {
+            'from': self.address_wallet,
+            'value': fee,
+            'nonce': self.web3.eth.get_transaction_count(self.address_wallet),
+            **self.get_gas_price()
+        }
+
+        txn = contract.functions.mintWithRewards(
+            Web3.to_checksum_address('0x1Cd1C1f3b8B779B50Db23155F2Cb244FCcA06B21'),
+            1,
+            quantity,
+            '0x000000000000000000000000' + self.address_wallet[2:],
+            Web3.to_checksum_address('0xCC05E5454D8eC8F0873ECD6b2E3da945B39acA6C')
+        ).build_transaction(dick)
+
+        self.send_transaction_and_wait(txn, f'Mint {quantity} THE AMBASSADOR')
+
     @exception_handler('Mint PYTHON ZORB || Zora chain')
     def mint_zorb_zora(self):
         quantity = random.randint(QUANTITY_NFT_6[0], QUANTITY_NFT_6[1])

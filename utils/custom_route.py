@@ -1,15 +1,6 @@
 from loguru import logger
-from utils.func import sleeping
 from settings import *
-from utils.merkly import Merkly
-from utils.zerius import Zerius
-from utils.mint_nft import MintNFT
-from utils.wallet import Wallet
-from utils.l2pass import L2Pass
-from utils.nft2me import NFT2ME
-from utils.create_contract import CreateContract
-from utils.mintfun import MintFun
-from utils.wrap import WrapETH
+from utils import *
 from web3 import Web3
 import random
 import time
@@ -186,3 +177,31 @@ class CustomRouter:
             sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
         wr.unwrap()
+
+    def swap(self):
+        uniswap = Uniswap(self.private_key, self.str_number, self.proxy)
+        number_trans = random.randint(NUMBER_TRANS_11[0], NUMBER_TRANS_11[1])
+        logger.info(f'Number of transactions - {number_trans}\n')
+        for _ in range(number_trans):
+            uniswap.buy_token()
+            sleeping(TIME_DELAY[0], TIME_DELAY[1])
+            uniswap.sold_token()
+            sleeping(TIME_DELAY[0], TIME_DELAY[1])
+
+    def mint_zorb_blast(self):
+        number_trans = random.randint(NUMBER_TRANS_6[0], NUMBER_TRANS_6[1])
+        logger.info(f'Number of transactions - {number_trans}\n')
+        zora = MintNFT(self.private_key, Blast, self.str_number, self.proxy)
+        for _ in range(number_trans):
+            zora.mint_zorb_blast()
+            sleeping(TIME_DELAY[0], TIME_DELAY[1])
+
+    def mint_zorb_arbitrum(self):
+        number_trans = random.randint(NUMBER_TRANS_6[0], NUMBER_TRANS_6[1])
+        logger.info(f'Number of transactions - {number_trans}\n')
+        zora = MintNFT(self.private_key, Arbitrum, self.str_number, self.proxy)
+        for _ in range(number_trans):
+            zora.mint_zorb_arbitrum()
+            sleeping(TIME_DELAY[0], TIME_DELAY[1])
+
+

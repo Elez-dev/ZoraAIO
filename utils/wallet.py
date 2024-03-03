@@ -7,8 +7,9 @@ from requests.adapters import Retry
 from utils.retry_wallet import exception_handler_wallet
 import requests
 from loguru import logger
-from settings import ZORA_GASPRICE_PRESCALE, BASE_GASPRICE_PRESCALE, TG_BOT_SEND
+from settings import ZORA_GASPRICE_PRESCALE, BASE_GASPRICE_PRESCALE, TG_BOT_SEND, BLAST_GASPRICE_PRESCALE
 from utils.tg_bot import TgBot
+import json as js
 
 SCAN = {
     'Ethereum': 'https://etherscan.io/tx/',
@@ -19,7 +20,8 @@ SCAN = {
     'Zora': 'https://explorer.zora.energy/tx/',
     'Nova': 'https://nova.arbiscan.io/tx/',
     'zkSync': 'https://era.zksync.network/tx/',
-    'Linea': 'https://lineascan.build/tx/'
+    'Linea': 'https://lineascan.build/tx/',
+    'Blast': 'https://blastscan.io/tx/'
 }
 
 
@@ -34,6 +36,7 @@ class Wallet(TgBot):
         self.scan = self.get_scan(chain)
         self.account = self.web3.eth.account.from_key(private_key)
         self.address_wallet = self.account.address
+        self.token_abi = js.load(open('./abi/token.txt'))
 
     def get_web3(self, chain):
         retries = Retry(total=10, backoff_factor=1, status_forcelist=[500, 502, 503, 504])
@@ -111,9 +114,11 @@ class Wallet(TgBot):
 
         if self.chain == 'Zora':
             return {'maxFeePerGas': Web3.to_wei(ZORA_GASPRICE_PRESCALE, 'gwei'), 'maxPriorityFeePerGas': Web3.to_wei(ZORA_GASPRICE_PRESCALE, 'gwei')}
+        elif self.chain == 'Blast':
+            return {'maxFeePerGas': Web3.to_wei(BLAST_GASPRICE_PRESCALE, 'gwei'), 'maxPriorityFeePerGas': Web3.to_wei(BLAST_GASPRICE_PRESCALE, 'gwei')}
         elif self.chain == 'Base':
             return {'maxFeePerGas': BASE_GASPRICE_PRESCALE, 'maxPriorityFeePerGas': int(BASE_GASPRICE_PRESCALE * 0.1)}
-        return {'maxFeePerGas': self.web3.eth.gas_price, 'maxPriorityFeePerGas': self.web3.eth.max_priority_fee}
+        return {'maxFeePerGas': self.web3.eth.gas_price, 'maxPriorityFeePerGas': int(self.web3.eth.max_priority_fee * 0.1)}
 
     @staticmethod
     def get_api_call_data_post(url, json):
@@ -153,3 +158,16 @@ class Wallet(TgBot):
         }
 
         self.send_transaction_and_wait(dick, f'Transfer {Web3.from_wei(amount, "ether")} ETH to {address}')
+
+    def approve(self, token_to_approve, address_to_approve):
+
+        token_contract = self.web3.eth.contract(address=Web3.to_checksum_address(token_to_approve), abi=self.token_abi)
+        max_amount = 2 ** 256 - 1
+        dick = {
+            'from': self.address_wallet,
+            'nonce': self.web3.eth.get_transaction_count(self.address_wallet),
+            **self.get_gas_price()
+        }
+        txn = token_contract.functions.approve(address_to_approve, max_amount).build_transaction(dick)
+
+        self.send_transaction_and_wait(txn, 'approve')
