@@ -364,29 +364,29 @@ if __name__ == '__main__':
 10 - Unwrap ETH 
 11 - Buy + Sold token
 
-12 - Mint PYTHON ZORB в сети ZORA        (С официальной комиссией ZORA 0.000777 ETH)
-13 - Mint PYTHON ZORB в сети BASE        (С официальной комиссией ZORA 0.000777 ETH)
-14 - Mint PYTHON ZORB в сети OPTIMISM    (С официальной комиссией ZORA 0.000777 ETH)
-15 - Mint PYTHON ZORB в сети Blast       (С официальной комиссией ZORA 0.000777 ETH)
-16 - Mint THE AMBASSADOR в сети Arbitrum (С официальной комиссией ZORA 0.000777 ETH)
+12 - Mint NFT в сети ZORA        (С официальной комиссией ZORA 0.000777 ETH)
+13 - Mint NFT в сети BASE        (С официальной комиссией ZORA 0.000777 ETH)
+14 - Mint NFT в сети OPTIMISM    (С официальной комиссией ZORA 0.000777 ETH)
+15 - Mint NFT в сети Blast       (С официальной комиссией ZORA 0.000777 ETH)
+16 - Mint NFT в сети Arbitrum    (С официальной комиссией ZORA 0.000777 ETH)
 
-17 - Mint PYTHON ZORB через OpenSea в сети ZORA     (FREE MINT)
-18 - Mint PYTHON ZORB через OpenSea в сети BASE     (FREE MINT)
-19 - Mint PYTHON ZORB через OpenSea в сети OPTIMISM (FREE MINT)
+17 - Mint NFT через OpenSea в сети ZORA     (FREE MINT)
+18 - Mint NFT через OpenSea в сети BASE     (FREE MINT)
+19 - Mint NFT через OpenSea в сети OPTIMISM (FREE MINT)
 
 20 - Mint Custom NFT  (Zora.co)
-21 - Mint NFTS2ME (FREE MINT)
-22 - Mint free NFT from Mint.fun
+21 - Mint NFTS2ME     (FREE MINT)
+22 - Mint FREE NFT from Mint.fun
 23 - Create contract NFT ERC1155 (Zora.co)
 24 - Update NFT metadata
 25 - Claim reward (Zora.co)
 26 - Send money yourself
 27 - Set email Zora.co
-28 - Deploy contract
+28 - Deploy Merkly contract
 29 - Check wallets stats
 
-30 - Generate custom routes
-31 - Run custom routs
+30 - Generate Custom routes(сначала этот модуль -> потом 31)
+31 - Run Custom routs
 ''')
 
             time.sleep(0.1)
