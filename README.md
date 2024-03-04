@@ -40,6 +40,7 @@ python3.10 main.py
 ---
 <h2>🤖 ВОЗМОЖНОСТИ СОФТА:</h2>
 
+```
 1  - Official Bridge ETH -> Zora
 
 2  - Relay bridge (INSTANT DEPOSIT/WITHDRAW)
@@ -60,17 +61,17 @@ python3.10 main.py
 
 10 - Unwrap ETH 
 
-11 - Buy + Sold token ( https://swap.zora.energy/#/swap )
+11 - Buy + Sold token            ( https://swap.zora.energy/#/swap )
 
-12 - Mint PYTHON ZORB в сети ZORA        (С официальной комиссией ZORA 0.000777 ETH)
+12 - Mint NFT в сети ZORA        (С официальной комиссией ZORA 0.000777 ETH)
 
-13 - Mint PYTHON ZORB в сети BASE        (С официальной комиссией ZORA 0.000777 ETH)
+13 - Mint NFT в сети BASE        (С официальной комиссией ZORA 0.000777 ETH)
 
-14 - Mint PYTHON ZORB в сети OPTIMISM    (С официальной комиссией ZORA 0.000777 ETH)
+14 - Mint NFT в сети OPTIMISM    (С официальной комиссией ZORA 0.000777 ETH)
 
-15 - Mint PYTHON ZORB в сети Blast       (С официальной комиссией ZORA 0.000777 ETH)
+15 - Mint NFT в сети Blast       (С официальной комиссией ZORA 0.000777 ETH)
 
-16 - Mint THE AMBASSADOR в сети Arbitrum (С официальной комиссией ZORA 0.000777 ETH)
+16 - Mint NFT в сети Arbitrum    (С официальной комиссией ZORA 0.000777 ETH)
 
 17 - Mint PYTHON ZORB через OpenSea в сети ZORA     (FREE MINT)
 
@@ -94,14 +95,13 @@ python3.10 main.py
 
 27 - Set email Zora.co
 
-28 - Deploy contract
+28 - Deploy Merkly contract
 
 29 - Check wallets stats
 
 30 - Generate custom routes
 
 31 - Run custom routs
-
-
+```
 ---
 <h2>❤️ По всем вопросам в наш чат - https://t.me/pythondao</h2>
