@@ -12,7 +12,7 @@ class ZoraScan(Wallet):
     def __init__(self, private_key, number, proxy):
         super().__init__(private_key, 'Zora', number, proxy)
 
-    @exception_handler
+    @exception_handler('Wallet stats')
     def get_nft_data(self):
 
         with requests.Session() as sess:

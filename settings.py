@@ -20,7 +20,7 @@ CHAIN_RPC = {
     Blast   : 'https://rpc.ankr.com/blast'
 }
 
-MAX_GAS_ETH = 45                                    # gas в gwei (смотреть здесь : https://etherscan.io/gastracker)
+MAX_GAS_ETH = 450                                    # gas в gwei (смотреть здесь : https://etherscan.io/gastracker)
 ZORA_GASPRICE_PRESCALE = 0.001                      # Использовать Max base fee и Priority fee для газа в Zora, экономия 0.3-0.5$
 BASE_GASPRICE_PRESCALE = 0.001                      # Использовать Max base fee и Priority fee для газа в Base
 BLAST_GASPRICE_PRESCALE = 0.001                     # Использовать Max base fee и Priority fee для газа в Blast

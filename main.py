@@ -11,7 +11,7 @@ from settings import *
 logger.remove()
 logger.add("./data/log.txt")
 logger.add(sys.stdout, format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <7}</level> | <cyan>{message}</cyan>")
-web3_eth = Web3(Web3.HTTPProvider('https://rpc.ankr.com/eth', request_kwargs={'timeout': 60}))
+web3_eth = Web3(Web3.HTTPProvider(CHAIN_RPC[Ethereum], request_kwargs={'timeout': 60}))
 
 chain_list = {
     'zora' : Zora,
@@ -296,7 +296,7 @@ class Worker:
             if self.action == 29:
                 zora = ZoraScan(key, str_number, proxy)
                 wallet_info_list.append(zora.get_nft_data())
-                time.sleep(0.1)
+                time.sleep(0.5)
                 continue
 
             if self.action == 31:
@@ -392,7 +392,7 @@ if __name__ == '__main__':
             time.sleep(0.1)
             act = int(input('Choose an action: '))
 
-            if act in range(1, 31):
+            if act in range(1, 32):
                 break
 
         worker = Worker(act)
