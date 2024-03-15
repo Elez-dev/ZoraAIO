@@ -4,6 +4,7 @@ import sys
 import time
 from web3 import Web3
 from utils import *
+from utils.custom_route import CustomRouter
 import requests
 import json
 from settings import *
@@ -25,22 +26,6 @@ chain_list = {
 class Worker:
     def __init__(self, actoin):
         self.action = actoin
-
-    @staticmethod
-    def chek_gas_eth():
-        while True:
-            try:
-                res = int(Web3.from_wei(web3_eth.eth.gas_price, 'gwei'))
-                logger.info(f'Газ сейчас - {res} gwei\n')
-                if res <= MAX_GAS_ETH:
-                    break
-                else:
-                    time.sleep(60)
-                    continue
-            except Exception as error:
-                logger.error(error)
-                time.sleep(30)
-                continue
 
     @staticmethod
     def change_ip():
@@ -96,9 +81,6 @@ class Worker:
 
     def work(self):
 
-        if self.action == 30:
-            return self.generate_route()
-
         i = 0
         wallet_info_list = []
         for number, account in keys_list:
@@ -109,7 +91,6 @@ class Worker:
             i += 1
             address = web3_eth.eth.account.from_key(key).address
             logger.info(f'Account #{i} || {address}\n')
-            self.chek_gas_eth()
 
             if self.action == 1:
                 dep = ZoraBridge(key, str_number)
@@ -212,7 +193,6 @@ class Worker:
                 logger.info(f'Number of transactions - {number_trans}\n')
                 zora = MintNFT(key, Zora, str_number, proxy)
                 for _ in range(number_trans):
-                    self.chek_gas_eth()
                     zora.mint_opensea_zorb_zora()
                     sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
@@ -221,7 +201,6 @@ class Worker:
                 logger.info(f'Number of transactions - {number_trans}\n')
                 zora = MintNFT(key, Base, str_number, proxy)
                 for _ in range(number_trans):
-                    self.chek_gas_eth()
                     zora.mint_opensea_zorb_base()
                     sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
@@ -230,7 +209,6 @@ class Worker:
                 logger.info(f'Number of transactions - {number_trans}\n')
                 zora = MintNFT(key, Optimism, str_number, proxy)
                 for _ in range(number_trans):
-                    self.chek_gas_eth()
                     zora.mint_opensea_zorb_opt()
                     sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
@@ -281,7 +259,6 @@ class Worker:
                 number_trans = random.randint(NUMBER_TRANS_YOURSELF[0], NUMBER_TRANS_YOURSELF[1])
                 logger.info(f'Number of transactions to yourself - {number_trans}\n')
                 for _ in range(number_trans):
-                    self.chek_gas_eth()
                     wal.transfer_native(address)
                     sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
@@ -302,32 +279,8 @@ class Worker:
             if self.action == 31:
 
                 rout = CustomRouter(key, str_number, proxy, address_nft, address)
-                data = json.load(open('./data/router.json'))
-                route = data[address]['route']
-                index = data[address]['index']
-
-                while index < len(route):
-                    method_name = route[index]
-                    if method_name is None:
-                        index += 1
-                        continue
-                    if hasattr(rout, method_name):
-                        logger.info(f'Module - {method_name}\n')
-                        if hasattr(rout, method_name):
-                            method = getattr(rout, method_name)
-                            try:
-                                self.chek_gas_eth()
-                                method()
-                                logger.success(f'Module completed, sleep and move on to the next one\n')
-                                sleeping(TIME_DELAY_ROUTES[0], TIME_DELAY_ROUTES[1])
-                            except:
-                                continue
-                            finally:
-                                index += 1
-                                data[address]['index'] = index
-                                with open('./data/router.json', 'w') as f:
-                                    json.dump(data, f)
-                else:
+                res = rout.run()
+                if res is False:
                     continue
 
             logger.success(f'Account completed, sleep and move on to the next one\n')
@@ -391,6 +344,10 @@ if __name__ == '__main__':
 
             time.sleep(0.1)
             act = int(input('Choose an action: '))
+
+            if act == 30:
+                Worker.generate_route()
+                continue
 
             if act in range(1, 32):
                 break

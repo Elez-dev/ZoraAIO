@@ -20,7 +20,7 @@ CHAIN_RPC = {
     Blast   : 'https://rpc.ankr.com/blast'
 }
 
-MAX_GAS_ETH = 450                                    # gas в gwei (смотреть здесь : https://etherscan.io/gastracker)
+MAX_GAS_ETH = 50                                    # gas в gwei (смотреть здесь : https://etherscan.io/gastracker)
 ZORA_GASPRICE_PRESCALE = 0.001                      # Использовать Max base fee и Priority fee для газа в Zora, экономия 0.3-0.5$
 BASE_GASPRICE_PRESCALE = 0.001                      # Использовать Max base fee и Priority fee для газа в Base
 BLAST_GASPRICE_PRESCALE = 0.001                     # Использовать Max base fee и Priority fee для газа в Blast
@@ -94,8 +94,8 @@ NUMBER_TRANS_7 = [1, 1]                             # Количество тр�
 
 # 20 - Mint Custom NFT -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-URL_CUSTOM_NFT = ['https://zora.co/collect/zora:0x651c54886153c96df8e0764abce9d13416c841f8/1',  # Минт любых других NFT на Zora.co (Будет рандомная из списка)
-                  'https://zora.co/collect/zora:0x0de78cc261622a04784a642eaf9008870e169588/1']  # Сюда пишем url NFT
+URL_CUSTOM_NFT = ['https://zora.co/collect/zora:0x7e8f28a51471a9a434505ac58ded39c422e73028/1']  # Минт любых других NFT на Zora.co (Будет рандомная из списка)
+                    # Сюда пишем url NFT
     
 QUANTITY_NFT_8 = [1, 1]                             # Количество NFT для минта
 NUMBER_TRANS_8 = [1, 1]                             # Количество транзакций             [min, max]
@@ -121,11 +121,10 @@ IMAP_SERVER = 'imap.rambler.ru'
 # 30 - Custom routes -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 routes = [
-    ['mint_zorb_zora', 'mintfun'],
+    ['mintfun'],
     ['mint_nft2me', None],                          # Если будет выбран None, то данный модуль ['mint_nft2me', None] будет пропущен 
     ['create_contract', None],
     ['mint_nft2me'],
-    ['swap', None],
     ['mint_opensea_zorb_zora']
 ]
 

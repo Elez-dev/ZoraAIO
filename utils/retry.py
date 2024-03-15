@@ -1,9 +1,29 @@
 from web3.exceptions import TransactionNotFound
 from loguru import logger
-from settings import RETRY, TIME_DELAY_ERROR, TG_BOT_SEND, REFUEL
+from settings import RETRY, TIME_DELAY_ERROR, TG_BOT_SEND, REFUEL, MAX_GAS_ETH, CHAIN_RPC
 from utils.tg_bot import TgBot
 from utils.func import sleeping
 from utils.refuel import Refuel
+from web3 import Web3
+import time
+
+web3_eth = Web3(Web3.HTTPProvider(CHAIN_RPC['Ethereum'], request_kwargs={'timeout': 60}))
+
+
+def chek_gas_eth():
+    while True:
+        try:
+            res = int(Web3.from_wei(web3_eth.eth.gas_price, 'gwei'))
+            logger.info(f'Газ сейчас - {res} gwei\n')
+            if res <= MAX_GAS_ETH:
+                break
+            else:
+                time.sleep(60)
+                continue
+        except Exception as error:
+            logger.error(error)
+            time.sleep(30)
+            continue
 
 
 def exception_handler(label=''):
@@ -11,6 +31,7 @@ def exception_handler(label=''):
         def wrapper(self, *args, **kwargs):
             for _ in range(RETRY):
                 try:
+                    chek_gas_eth()
                     return func(self, *args, **kwargs)
 
                 except TransactionNotFound:

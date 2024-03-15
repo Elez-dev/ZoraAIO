@@ -4,6 +4,7 @@ from utils import *
 from web3 import Web3
 import random
 import time
+import json
 
 web3_eth = Web3(Web3.HTTPProvider('https://rpc.ankr.com/eth', request_kwargs={'timeout': 60}))
 
@@ -203,5 +204,39 @@ class CustomRouter:
         for _ in range(number_trans):
             zora.mint_zorb_arbitrum()
             sleeping(TIME_DELAY[0], TIME_DELAY[1])
+
+    def run(self):
+
+        address = web3_eth.eth.account.from_key(self.private_key).address
+        data = json.load(open('./data/router.json'))
+        route = data[address]['route']
+        index = data[address]['index']
+
+        flag = False
+
+        while index < len(route):
+            method_name = route[index]
+            if method_name is None:
+                index += 1
+                continue
+            if hasattr(self, method_name):
+                logger.info(f'Module - {method_name}\n')
+                if hasattr(self, method_name):
+                    method = getattr(self, method_name)
+                    try:
+                        method()
+                        logger.success(f'Module completed, sleep and move on to the next one\n')
+                        sleeping(TIME_DELAY_ROUTES[0], TIME_DELAY_ROUTES[1])
+                        flag = True
+                    except Exception as error:
+                        logger.error(error)
+                        time.sleep(20)
+                    finally:
+                        index += 1
+                        data[address]['index'] = index
+                        with open('./data/router.json', 'w') as f:
+                            json.dump(data, f)
+        else:
+            return flag
 
 
