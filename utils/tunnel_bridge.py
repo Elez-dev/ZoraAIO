@@ -45,7 +45,7 @@ class TunnelBridge(Wallet):
         value = int(data['steps'][0]['items'][0]['data']['value'])
 
         if balance < value:
-            value = balance
+            value = (balance * 0.7)
 
         if value <= 0:
             logger.error(f'Value bridge ETH - {value}\n')
