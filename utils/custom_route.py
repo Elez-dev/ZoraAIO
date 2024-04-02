@@ -205,12 +205,29 @@ class CustomRouter:
             zora.mint_zorb_arbitrum()
             sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
+    def buy_token(self):
+        uniswap = Uniswap(self.private_key, self.str_number, self.proxy)
+        uniswap.buy_token()
+
+    def mint_for_enjoy(self):
+        nft = MintForEnjoy(self.private_key, self.str_number, self.proxy)
+        number_trans = random.randint(NUMBER_TRANS_31[0], NUMBER_TRANS_31[1])
+        logger.info(f'Number of transactions - {number_trans}\n')
+        for _ in range(number_trans):
+            res = nft.mint()
+            if res is False:
+                break
+            sleeping(TIME_DELAY[0], TIME_DELAY[1])
+
     def run(self):
 
         address = web3_eth.eth.account.from_key(self.private_key).address
-        data = json.load(open('./data/router.json'))
-        route = data[address]['route']
-        index = data[address]['index']
+        try:
+            data = json.load(open('./data/router.json'))
+            route = data[address]['route']
+            index = data[address]['index']
+        except:
+            return False
 
         flag = False
 

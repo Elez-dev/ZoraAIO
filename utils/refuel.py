@@ -54,7 +54,7 @@ class Refuel(Wallet):
         if self.chain == self.chain_to:
             return 'error'
 
-        logger.info(f'Tunnel bridge || {self.chain} -> {self.chain_to}')
+        logger.info(f'Relay bridge || {self.chain} -> {self.chain_to}')
 
         if self.chain == 'Polygon':
             value = VALUE_REFUEL['Polygon']
@@ -81,7 +81,7 @@ class Refuel(Wallet):
         value = int(data['steps'][0]['items'][0]['data']['value'])
 
         if balance < value:
-            value = balance
+            value = (balance * 0.7)
 
         if value <= 0:
             logger.error(f'Value bridge {token} - {value}\n')
@@ -100,4 +100,4 @@ class Refuel(Wallet):
         gas = int(self.web3.eth.estimate_gas(dick) * 1.3)
         dick.update({'gas': gas})
 
-        self.send_transaction_and_wait(dick, f'Tunnel bridge {round(Web3.from_wei(value, "ether"), 5)} {token} || {self.chain} -> {self.chain_to}')
+        self.send_transaction_and_wait(dick, f'Relay bridge {round(Web3.from_wei(value, "ether"), 5)} {token} || {self.chain} -> {self.chain_to}')

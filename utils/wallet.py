@@ -7,7 +7,7 @@ from requests.adapters import Retry
 from utils.retry_wallet import exception_handler_wallet
 import requests
 from loguru import logger
-from settings import ZORA_GASPRICE_PRESCALE, BASE_GASPRICE_PRESCALE, TG_BOT_SEND, BLAST_GASPRICE_PRESCALE
+from settings import ZORA_GASPRICE_PRESCALE, TG_BOT_SEND, BLAST_GASPRICE_PRESCALE
 from utils.tg_bot import TgBot
 import json as js
 
