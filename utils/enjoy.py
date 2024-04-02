@@ -26,7 +26,7 @@ class MintForEnjoy(Wallet):
             logger.error('Not enough ENJOY on balance\n')
             return False
 
-        allowance = self.enjoy_contract.functions.allowance(self.address, self.address).call()
+        allowance = self.enjoy_contract.functions.allowance(self.address_wallet, self.address).call()
         if allowance < Web3.to_wei(100000, 'ether'):
             self.approve(self.enjoy, self.address)
             sleeping(50, 70)
