@@ -40,6 +40,8 @@ class Worker:
         dick = {}
         for number, account in keys_list:
             key, proxy, address_nft, mail = account
+            if key is None:
+                continue
             address = web3_eth.eth.account.from_key(key).address
             if routes_shuffle is True:
                 random.shuffle(routes)
@@ -89,6 +91,8 @@ class Worker:
             if MOBILE_PROXY is True:
                 proxy = MOBILE_DATA
             i += 1
+            if key is None:
+                continue
             address = web3_eth.eth.account.from_key(key).address
             logger.info(f'Account #{i} || {address}\n')
 
