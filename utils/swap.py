@@ -6,21 +6,15 @@ from utils.func import sleeping
 from settings import TOKEN_SWAP, VALUE_SWAP
 import json as js
 import random
+from hexbytes import HexBytes
 import time
 
 
 class Uniswap(Wallet):
     def __init__(self, private_key, number, proxy):
         super().__init__(private_key, 'Zora', number, proxy)
-        self.address = Web3.to_checksum_address('0xa00F34A632630EFd15223B1968358bA4845bEEC7')
-        self.abi = js.load(open('./abi/uniswap.txt'))
-        self.contract = self.web3.eth.contract(address=self.address, abi=self.abi)
-        self.ETH = Web3.to_checksum_address('0x4200000000000000000000000000000000000006')
         self.token_to_sold = None
-
-    def get_amount_out(self, token_to_buy, token_to_sold, value):
-        amount_out = self.contract.functions.getAmountsOut(value, [token_to_sold, token_to_buy]).call()[1]
-        return int(amount_out - (amount_out // 100))
+        self.address = Web3.to_checksum_address('0x2986d9721a49838ab4297b695858af7f17f38014')
 
     @exception_handler('Buy token on Uniswap')
     def buy_token(self):
@@ -32,37 +26,57 @@ class Uniswap(Wallet):
         value = round(random.uniform(VALUE_SWAP[0], VALUE_SWAP[1]), VALUE_SWAP[2])
         value_wei = Web3.to_wei(value, 'ether')
 
-        min_tokens = self.get_amount_out(token_to_buy, self.ETH, value_wei)
-        token_decimal = token_contract.functions.decimals().call()
-        min_tok = self.from_wei(token_decimal, min_tokens)
-
-        contract_txn = self.contract.functions.swapExactETHForTokens(
-            min_tokens,
-            [self.ETH, token_to_buy],
-            self.address_wallet,
-            (int(time.time()) + 10000)  # deadline
-        ).build_transaction({
-            'from': self.address_wallet,
-            'value': value_wei,
+        json = {
+            'amount': str(value_wei),
+            'configs': [{
+                'enableFeeOnTransferFeeFetching': True,
+                'enableUniversalRouter': True,
+                'protocols': ['V3'],
+                'recipient': self.address_wallet,
+                'routingType': 'CLASSIC',
+            }],
+            'intent': 'quote',
+            'sendPortionEnabled': False,
+            'tokenIn': 'ETH',
+            'tokenInChainId': 7777777,
+            'tokenOut': token_to_buy,
+            'tokenOutChainId': 7777777,
+            'type': 'EXACT_INPUT',
+        }
+        url = 'https://api.swap.zora.energy/quote'
+        data = self.get_api_call_data_post(url, json)
+        tx = {
+            'chainId': 7777777,
             'nonce': self.web3.eth.get_transaction_count(self.address_wallet),
+            'from': self.address_wallet,
+            'to': self.address,
+            'data': data['quote']['methodParameters']['calldata'],
+            'value': value_wei,
             **self.get_gas_price()
-        })
+        }
 
-        self.send_transaction_and_wait(contract_txn, f'Buy {min_tok} {toke_name} Uniswap')
+        gas = int(self.web3.eth.estimate_gas(tx) * 1.3)
+        tx.update({'gas': gas})
+
+        self.send_transaction_and_wait(tx, f'Swap from {value} ETH to {round(float(data["quote"]["quoteDecimals"]), 4)} {toke_name}')
 
         self.token_to_sold = token_to_buy
 
     @exception_handler('Sold token on Uniswap')
     def sold_token(self):
+        self.token_to_sold = '0xa6B280B42CB0b7c4a4F789eC6cCC3a7609A1Bc39'
         if self.token_to_sold is None:
-            return
+            return False
         token_contract = self.web3.eth.contract(address=self.token_to_sold, abi=self.token_abi)
-        toke_name = token_contract.functions.name().call()
-        logger.info(f'Sold {toke_name} token on Uniswap')
+        token_name = token_contract.functions.name().call()
+        token_decimal = token_contract.functions.decimals().call()
 
         token_balance = token_contract.functions.balanceOf(self.address_wallet).call()
         if token_balance == 0:
-            return
+            logger.error('Token balance - 0\n')
+            return False
+
+        logger.info(f'Sold {token_name} token on Uniswap')
 
         allowance = token_contract.functions.allowance(self.address_wallet, self.address).call()
         if allowance < token_balance:
@@ -70,23 +84,41 @@ class Uniswap(Wallet):
             self.approve(self.token_to_sold, self.address)
             sleeping(50, 70)
 
-        min_tokens = self.get_amount_out(self.ETH, self.token_to_sold, token_balance)
-
-        token_decimal = token_contract.functions.decimals().call()
-        min_tok = self.from_wei(token_decimal, token_balance)
-
-        contract_txn = self.contract.functions.swapExactTokensForETH(
-            token_balance,
-            min_tokens,
-            [self.token_to_sold, self.ETH],
-            self.address_wallet,
-            (int(time.time()) + 10000)  # deadline
-        ).build_transaction({
-            'from': self.address_wallet,
+        json = {
+            'amount': str(token_balance),
+            'configs': [{
+                'enableFeeOnTransferFeeFetching': True,
+                'enableUniversalRouter': True,
+                'protocols': ['V3'],
+                'recipient': self.address_wallet,
+                'routingType': 'CLASSIC',
+            }],
+            'intent': 'quote',
+            'sendPortionEnabled': False,
+            'tokenIn': self.token_to_sold,
+            'tokenInChainId': 7777777,
+            'tokenOut': 'ETH',
+            'tokenOutChainId': 7777777,
+            'type': 'EXACT_OUTPUT',
+        }
+        url = 'https://api.swap.zora.energy/quote'
+        data = self.get_api_call_data_post(url, json)
+        logger.info(data['quote']['methodParameters']['calldata'])
+        tx = {
+            'chainId': 7777777,
             'nonce': self.web3.eth.get_transaction_count(self.address_wallet),
+            'from': self.address_wallet,
+            'to': self.address,
+            'data': data['quote']['methodParameters']['calldata'],
             **self.get_gas_price()
-        })
+        }
 
-        self.send_transaction_and_wait(contract_txn, f'Sold {min_tok} {toke_name} Uniswap')
+        gas = int(self.web3.eth.estimate_gas(tx) * 1.3)
+        tx.update({'gas': gas})
+
+        logger.info(f'Swap from {self.from_wei(token_decimal, token_balance)} {token_name} to {round(float(data["quote"]["quoteDecimals"]), 5)} ETH')
+
+        # self.send_transaction_and_wait(tx, f'Swap from {self.from_wei(token_decimal, token_balance)} {token_name} to {round(float(data["quote"]["quoteDecimals"]), 5)} ETH')
+
 
         self.token_to_sold = None

@@ -214,7 +214,17 @@ class CustomRouter:
         number_trans = random.randint(NUMBER_TRANS_31[0], NUMBER_TRANS_31[1])
         logger.info(f'Number of transactions - {number_trans}\n')
         for _ in range(number_trans):
-            res = nft.mint()
+            res = nft.mint_enjoy()
+            if res is False:
+                break
+            sleeping(TIME_DELAY[0], TIME_DELAY[1])
+
+    def mint_for_imagine(self):
+        nft = MintForEnjoy(self.private_key, self.str_number, self.proxy)
+        number_trans = random.randint(NUMBER_TRANS_32[0], NUMBER_TRANS_32[1])
+        logger.info(f'Number of transactions - {number_trans}\n')
+        for _ in range(number_trans):
+            res = nft.mint_imagine()
             if res is False:
                 break
             sleeping(TIME_DELAY[0], TIME_DELAY[1])
@@ -226,7 +236,8 @@ class CustomRouter:
             data = json.load(open('./data/router.json'))
             route = data[address]['route']
             index = data[address]['index']
-        except:
+        except Exception as error:
+            logger.error(error)
             return False
 
         flag = False

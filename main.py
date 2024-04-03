@@ -281,16 +281,30 @@ class Worker:
                 uniswap.buy_token()
 
             if self.action == 31:
+                uniswap = Uniswap(key, str_number, proxy)
+                uniswap.sold_token()
+
+            if self.action == 32:
                 nft = MintForEnjoy(key, str_number, proxy)
                 number_trans = random.randint(NUMBER_TRANS_31[0], NUMBER_TRANS_31[1])
                 logger.info(f'Number of transactions - {number_trans}\n')
                 for _ in range(number_trans):
-                    res = nft.mint()
+                    res = nft.mint_enjoy()
                     if res is False:
                         break
                     sleeping(TIME_DELAY[0], TIME_DELAY[1])
 
             if self.action == 33:
+                nft = MintForEnjoy(key, str_number, proxy)
+                number_trans = random.randint(NUMBER_TRANS_32[0], NUMBER_TRANS_32[1])
+                logger.info(f'Number of transactions - {number_trans}\n')
+                for _ in range(number_trans):
+                    res = nft.mint_imagine()
+                    if res is False:
+                        break
+                    sleeping(TIME_DELAY[0], TIME_DELAY[1])
+
+            if self.action == 35:
 
                 rout = CustomRouter(key, str_number, proxy, address_nft, address)
                 res = rout.run()
@@ -352,20 +366,22 @@ if __name__ == '__main__':
 28 - Deploy Merkly contract
 29 - Check wallets stats
 30 - Buy token
-31 - Mint nft for ENJOY
+31 - Sold Token
+32 - Mint nft for ENJOY
+33 - Mint nft for Imagine
 
-32 - Generate Custom routes(сначала этот модуль -> потом 33)
-33 - Run Custom routs
+34 - Generate Custom routes(сначала этот модуль -> потом 33)
+35 - Run Custom routs
 ''')
 
             time.sleep(0.1)
             act = int(input('Choose an action: '))
 
-            if act == 32:
+            if act == 34:
                 Worker.generate_route()
                 continue
 
-            if act in range(1, 34):
+            if act in range(1, 36):
                 break
 
         worker = Worker(act)
