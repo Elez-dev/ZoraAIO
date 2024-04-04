@@ -109,7 +109,8 @@ def get_accounts_data():
 
         priv_key_evm, prx, nftt, maill = [], [], [], []
         for k, v in accounts_data.items():
-            priv_key_evm.append(v['private_key_evm'] if isinstance(v['private_key_evm'], str) else None)
+            if isinstance(v['private_key_evm'], str):
+                priv_key_evm.append(v['private_key_evm'])
             prx.append(v['proxy'] if isinstance(v['proxy'], str) else None)
             nftt.append(v['nft'] if isinstance(v['nft'], str) else None)
             maill.append(v['mail'] if isinstance(v['mail'], str) else None)

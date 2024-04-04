@@ -40,8 +40,6 @@ class Worker:
         dick = {}
         for number, account in keys_list:
             key, proxy, address_nft, mail = account
-            if key is None:
-                continue
             address = web3_eth.eth.account.from_key(key).address
             if routes_shuffle is True:
                 random.shuffle(routes)
@@ -91,8 +89,6 @@ class Worker:
             if MOBILE_PROXY is True:
                 proxy = MOBILE_DATA
             i += 1
-            if key is None:
-                continue
             address = web3_eth.eth.account.from_key(key).address
             logger.info(f'Account #{i} || {address}\n')
 
@@ -286,7 +282,9 @@ class Worker:
 
             if self.action == 31:
                 uniswap = Uniswap(key, str_number, proxy)
-                uniswap.sold_token()
+                res = uniswap.sold_token()
+                if res is False:
+                    continue
 
             if self.action == 32:
                 nft = MintForEnjoy(key, str_number, proxy)
@@ -328,6 +326,7 @@ class Worker:
 
 if __name__ == '__main__':
     list1 = get_accounts_data()
+    logger.info(list1)
     all_wallets = len(list1)
     logger.info(f'Number of wallets: {all_wallets}\n')
     keys_list = shuffle(list1)
