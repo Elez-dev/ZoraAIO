@@ -80,8 +80,8 @@ class MintForEnjoy(Wallet):
         txn = self.contract.functions.mint(
             self.address_wallet,
             quantity,
-            Web3.to_checksum_address('0x79a16629b15b52239ac0d887673eba6e8e732daf'),
-            13,
+            Web3.to_checksum_address('0xd202237ad529ac6d8f21f6b426d080f61cf5450f'),
+            3,
             Web3.to_wei(quantity, 'ether'),
             self.imagine,
             Web3.to_checksum_address('0xCC05E5454D8eC8F0873ECD6b2E3da945B39acA6C'),
