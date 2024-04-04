@@ -99,7 +99,7 @@ class Uniswap(Wallet):
             'tokenInChainId': 7777777,
             'tokenOut': 'ETH',
             'tokenOutChainId': 7777777,
-            'type': 'EXACT_OUTPUT',
+            'type': 'EXACT_INPUT',
         }
         url = 'https://api.swap.zora.energy/quote'
         data = self.get_api_call_data_post(url, json)
@@ -116,9 +116,9 @@ class Uniswap(Wallet):
         gas = int(self.web3.eth.estimate_gas(tx) * 1.3)
         tx.update({'gas': gas})
 
-        logger.info(f'Swap from {self.from_wei(token_decimal, token_balance)} {token_name} to {round(float(data["quote"]["quoteDecimals"]), 5)} ETH')
+        # logger.info(f'Swap from {self.from_wei(token_decimal, token_balance)} {token_name} to {round(float(data["quote"]["quoteDecimals"]), 5)} ETH')
 
-        # self.send_transaction_and_wait(tx, f'Swap from {self.from_wei(token_decimal, token_balance)} {token_name} to {round(float(data["quote"]["quoteDecimals"]), 5)} ETH')
+        self.send_transaction_and_wait(tx, f'Swap from {self.from_wei(token_decimal, token_balance)} {token_name} to {round(float(data["quote"]["quoteDecimals"]), 5)} ETH')
 
 
         self.token_to_sold = None

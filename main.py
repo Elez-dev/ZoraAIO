@@ -40,8 +40,6 @@ class Worker:
         dick = {}
         for number, account in keys_list:
             key, proxy, address_nft, mail = account
-            if key is None:
-                continue
             address = web3_eth.eth.account.from_key(key).address
             if routes_shuffle is True:
                 random.shuffle(routes)
@@ -91,8 +89,6 @@ class Worker:
             if MOBILE_PROXY is True:
                 proxy = MOBILE_DATA
             i += 1
-            if key is None:
-                continue
             address = web3_eth.eth.account.from_key(key).address
             logger.info(f'Account #{i} || {address}\n')
 
@@ -286,7 +282,9 @@ class Worker:
 
             if self.action == 31:
                 uniswap = Uniswap(key, str_number, proxy)
-                uniswap.sold_token()
+                res = uniswap.sold_token()
+                if res is False:
+                    continue
 
             if self.action == 32:
                 nft = MintForEnjoy(key, str_number, proxy)
@@ -328,6 +326,7 @@ class Worker:
 
 if __name__ == '__main__':
     list1 = get_accounts_data()
+    logger.info(list1)
     all_wallets = len(list1)
     logger.info(f'Number of wallets: {all_wallets}\n')
     keys_list = shuffle(list1)
@@ -335,47 +334,47 @@ if __name__ == '__main__':
     while True:
         while True:
             logger.info('''
-1  - Official Bridge ETH -> Zora
-2  - Relay bridge
+1  - OFFICIAL BRIDGE ETH -> ZORA
+2  - INSTANT BRIDGE
 
-3  - Merkly GAS
-4  - Zerius GAS
-5  - Mint NFT Zerius
-6  - Bridge NFT Zerius
-7  - Mint NFT L2PASS
-8  - Bridge NFT L2PASS
+3  - MERKLY GAS
+4  - ZERIUS GAS
+5  - MINT NFT ZERIUS
+6  - BRIDGE NFT ZERIUS
+7  - MINT NFT L2PASS
+8  - BRIDGE NFT L2PASS
 
-9  - Wrap ETH
-10 - Unwrap ETH 
-11 - Buy + Sold token
+9  - WRAP ETH
+10 - UNWRAP ETH 
+11 - BUY + SOLD TOKEN
 
-12 - Mint NFT в сети ZORA        (С официальной комиссией ZORA 0.000777 ETH)
-13 - Mint NFT в сети BASE        (С официальной комиссией ZORA 0.000777 ETH)
-14 - Mint NFT в сети OPTIMISM    (С официальной комиссией ZORA 0.000777 ETH)
-15 - Mint NFT в сети Blast       (С официальной комиссией ZORA 0.000777 ETH)
-16 - Mint NFT в сети Arbitrum    (С официальной комиссией ZORA 0.000777 ETH)
+12 - MINT NFT в сети ZORA             (С официальной комиссией ZORA 0.000777 ETH)
+13 - MINT NFT в сети BASE             (С официальной комиссией ZORA 0.000777 ETH)
+14 - MINT NFT в сети OPTIMISM         (С официальной комиссией ZORA 0.000777 ETH)
+15 - MINT NFT в сети BLAST            (С официальной комиссией ZORA 0.000777 ETH)
+16 - MINT NFT в сети ARBITRUM         (С официальной комиссией ZORA 0.000777 ETH)
 
-17 - Mint NFT через OpenSea в сети ZORA     (FREE MINT)
-18 - Mint NFT через OpenSea в сети BASE     (FREE MINT)
-19 - Mint NFT через OpenSea в сети OPTIMISM (FREE MINT)
+17 - MINT NFT OPENSEA в сети ZORA     (FREE MINT)
+18 - MINT NFT OPENSEA в сети BASE     (FREE MINT)
+19 - MINT NFT OPENSEA в сети OPTIMISM (FREE MINT)
 
-20 - Mint Custom NFT  (Zora.co)
-21 - Mint NFTS2ME     (FREE MINT)
-22 - Mint FREE NFT from Mint.fun
-23 - Create contract NFT ERC1155 (Zora.co)
-24 - Update NFT metadata
-25 - Claim reward (Zora.co)
-26 - Send money yourself
-27 - Set email Zora.co
-28 - Deploy Merkly contract
-29 - Check wallets stats
-30 - Buy token
-31 - Sold Token
-32 - Mint nft for ENJOY
-33 - Mint nft for Imagine
+20 - MINT Custom NFT                  (ZORA.CO)
+21 - MINT NFTS2ME                     (FREE MINT)
+22 - MINT NFT FROM MINT.FUN           (FREE MINT)
+23 - CREATE ERC1155 NFT CONTRACT      (ZORA.CO)
+24 - UPDATE NFT METADATA              (ZORA.CO)
+25 - CLAIM REWARD                     (ZORA.CO)
+26 - SEND ETH YOURSELF
+27 - SET EMAIL ON ZORA
+28 - DEPLOY MERKLY CONTRACT
+29 - CHECK WALLETS STATS
+30 - BUY TOKEN
+31 - SOLD TOKEN
+32 - MINT NFT FOR $ENJOY              (ZORA.CO)
+33 - MINT NFT FOR $IMAGINE            (ZORA.CO)
 
-34 - Generate Custom routes(сначала этот модуль -> потом 33)
-35 - Run Custom routs
+34 - GENERATE CUSTOM ROUTES           (сначала этот модуль -> потом 35)
+35 - RUN CUSTOM ROUTES
 ''')
 
             time.sleep(0.1)
