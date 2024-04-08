@@ -41,67 +41,74 @@ python3.10 main.py
 <h2>🤖 ВОЗМОЖНОСТИ СОФТА:</h2>
 
 ```
-1  - Official Bridge ETH -> Zora
+1  - OFFICIAL BRIDGE ETH -> ZORA
 
-2  - Relay bridge (INSTANT DEPOSIT/WITHDRAW)
+2  - INSTANT BRIDGE
 
-3  - Merkly GAS
+3  - MERKLY GAS
 
-4  - Zerius GAS
+4  - ZERIUS GAS
 
-5  - Mint NFT Zerius
+5  - MINT NFT ZERIUS
 
-6  - Bridge NFT Zerius
+6  - BRIDGE NFT ZERIUS
 
-7  - Mint NFT L2PASS
+7  - MINT NFT L2PASS
 
-8  - Bridge NFT L2PASS
+8  - BRIDGE NFT L2PASS
 
-9  - Wrap ETH
+9  - WRAP ETH
 
-10 - Unwrap ETH 
+10 - UNWRAP ETH
 
-11 - Buy + Sold token            ( https://swap.zora.energy/#/swap )
+11 - BUY + SOLD TOKEN
 
-12 - Mint NFT в сети ZORA        (С официальной комиссией ZORA 0.000777 ETH)
+12 - MINT NFT в сети ZORA             (С официальной комиссией ZORA 0.000777 ETH)
 
-13 - Mint NFT в сети BASE        (С официальной комиссией ZORA 0.000777 ETH)
+13 - MINT NFT в сети BASE             (С официальной комиссией ZORA 0.000777 ETH)
 
-14 - Mint NFT в сети OPTIMISM    (С официальной комиссией ZORA 0.000777 ETH)
+14 - MINT NFT в сети OPTIMISM         (С официальной комиссией ZORA 0.000777 ETH)
 
-15 - Mint NFT в сети Blast       (С официальной комиссией ZORA 0.000777 ETH)
+15 - MINT NFT в сети BLAST            (С официальной комиссией ZORA 0.000777 ETH)
 
-16 - Mint NFT в сети Arbitrum    (С официальной комиссией ZORA 0.000777 ETH)
+16 - MINT NFT в сети ARBITRUM         (С официальной комиссией ZORA 0.000777 ETH)
 
-17 - Mint PYTHON ZORB через OpenSea в сети ZORA     (FREE MINT)
+17 - MINT NFT OPENSEA в сети ZORA     (FREE MINT)
 
-18 - Mint PYTHON ZORB через OpenSea в сети BASE     (FREE MINT)
+18 - MINT NFT OPENSEA в сети BASE     (FREE MINT)
 
-19 - Mint PYTHON ZORB через OpenSea в сети OPTIMISM (FREE MINT)
+19 - MINT NFT OPENSEA в сети OPTIMISM (FREE MINT)
 
-20 - Mint Custom NFT  (Zora.co)
+20 - MINT Custom NFT                  (ZORA.CO)
 
-21 - Mint NFTS2ME (FREE MINT)
+21 - MINT NFTS2ME                     (FREE MINT)
 
-22 - Mint free NFT from Mint.fun
+22 - MINT NFT FROM MINT.FUN           (FREE MINT)
 
-23 - Create contract NFT ERC1155 (Zora.co)
+23 - CREATE ERC1155 NFT CONTRACT      (ZORA.CO)
 
-24 - Update NFT metadata
+24 - UPDATE NFT METADATA              (ZORA.CO)
 
-25 - Claim reward (Zora.co)
+25 - CLAIM REWARD                     (ZORA.CO)
 
-26 - Send money yourself
+26 - SEND ETH YOURSELF
 
-27 - Set email Zora.co
+27 - SET EMAIL ON ZORA
 
-28 - Deploy Merkly contract
+28 - DEPLOY MERKLY CONTRACT
 
-29 - Check wallets stats
+29 - CHECK WALLETS STATS
 
-30 - Generate custom routes
+30 - BUY TOKEN
 
-31 - Run custom routs
+31 - SOLD TOKEN
+32 - MINT NFT FOR $ENJOY              (ZORA.CO)
+
+33 - MINT NFT FOR $IMAGINE            (ZORA.CO)
+
+34 - GENERATE CUSTOM ROUTES           (сначала этот модуль -> потом 35)
+
+35 - RUN CUSTOM ROUTES
 ```
 ---
 <h2>❤️ По всем вопросам в наш чат - https://t.me/pythondao</h2>
