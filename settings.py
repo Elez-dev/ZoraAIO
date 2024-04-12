@@ -1,7 +1,7 @@
 from utils.chain import *
 
 EXCEL_PASSWORD  = False                             # Если ставите пароль на Excel с приватниками || True/ False
-SHUFFLE_WALLETS = False                              # Перемешка кошельков                         || True/ False
+SHUFFLE_WALLETS = True                              # Перемешка кошельков                         || True/ False
 
 TG_BOT_SEND = False                                 # Включить уведомления в тг или нет           || True/ False
 TG_TOKEN = ''                                       # API токен тг-бота - создать его можно здесь - https://t.me/BotFather
@@ -76,7 +76,7 @@ NUMBER_TRANS_9 = [1, 1]                             # Количество тр�
 # 11 Uniswap ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-VALUE_SWAP = [0.00001, 0.00002, 5]                           # [min, max, decimal]
+VALUE_SWAP = [0.0001, 0.0002, 5]                             # [min, max, decimal]
 TOKEN_SWAP = ['0x078540eECC8b6d89949c9C7d5e8E91eAb64f6696']  # Сюда вписывать контракты токенов для свапа
                                                              # Будет выбираться рандомно из списка
                                                              # 0x078540eECC8b6d89949c9C7d5e8E91eAb64f6696 - $IMAGINE
@@ -123,11 +123,12 @@ IMAP_SERVER = 'imap.rambler.ru'
 
 routes = [
     ['mint_zorb_zora', 'mintfun', 'mint_opensea_zorb_zora'],
+    ['mint_opensea_zorb_optimism', 'mint_opensea_zorb_base', None],
     ['mint_opensea_zorb_zora', 'mint_opensea_zorb_zora'],
     ['mint_custom_nft', 'mint_zorb_zora', None],
     ['wrap_unwrap', 'mint_zorb_base', 'send_money_yourself'],
     ['mint_opensea_zorb_optimism', 'mint_opensea_zorb_base', None],
-    ['buy_token', 'mint_for_imagine']
+    ['buy_token']
 ]
 
 routes_shuffle = True                                # Перемешивает модули || True/ False
@@ -176,9 +177,9 @@ VALUE_REFUEL = {
 # 31 Mint nft for ENJOY -------------------------------------------------------------------------------------------------------------------------------
 
 QUANTITY_NFT_31 = [1, 1]                          # Количество NFT для минта          [min, max]
-NUMBER_TRANS_31 = [15, 20]                          # Количество транзакций             [min, max]
+NUMBER_TRANS_31 = [1, 3]                          # Количество транзакций             [min, max]
 
 # 32 Mint nft for imagine ---------------------------------------------------------------------------------------------------------------------------
 
 QUANTITY_NFT_32 = [1, 1]                          # Количество NFT для минта          [min, max]
-NUMBER_TRANS_32 = [10, 20]                        # Количество транзакций             [min, max]
+NUMBER_TRANS_32 = [1, 3]                          # Количество транзакций             [min, max]
