@@ -81,7 +81,7 @@ class MintForEnjoy(Wallet):
             self.address_wallet,
             quantity,
             Web3.to_checksum_address('0xd202237ad529ac6d8f21f6b426d080f61cf5450f'),
-            2,
+            1,
             10000000 * quantity,
             self.imagine,
             Web3.to_checksum_address('0xCC05E5454D8eC8F0873ECD6b2E3da945B39acA6C'),
