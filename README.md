@@ -102,6 +102,7 @@ python3.10 main.py
 30 - BUY TOKEN
 
 31 - SOLD TOKEN
+
 32 - MINT NFT FOR $ENJOY              (ZORA.CO)
 
 33 - MINT NFT FOR $IMAGINE            (ZORA.CO)
