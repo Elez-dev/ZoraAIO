@@ -11,7 +11,7 @@ CHAIN_RPC = {
     Arbitrum: 'https://1rpc.io/arb',
     Optimism: 'https://1rpc.io/op',
     Polygon : 'https://1rpc.io/matic',
-    Zora    : 'https://rpc.zora.energy',      # https://zora.rpc.thirdweb.com | https://rpc.zora.energy | https://rpc.zerion.io/v1/zora
+    Zora    : 'https://rpc.zora.energy',            # https://zora.rpc.thirdweb.com | https://rpc.zora.energy | https://rpc.zerion.io/v1/zora
     Ethereum: 'https://rpc.ankr.com/eth',
     Base    : 'https://rpc.ankr.com/base',
     Nova    : 'https://rpc.ankr.com/arbitrumnova',
@@ -122,7 +122,7 @@ IMAP_SERVER = 'imap.rambler.ru'
 routes = [
     ['mint_zorb_zora', 'mintfun', 'mint_opensea_zorb_zora'],
     ['mint_opensea_zorb_optimism', 'mint_opensea_zorb_base', None],
-    ['mint_opensea_zorb_zora', 'mint_opensea_zorb_zora'],
+    ['mint_opensea_zorb_zora', 'mint_opensea_zorb_zora', 'mintfun'],
     ['mint_custom_nft', 'mint_zorb_zora', None],
     ['wrap_unwrap', 'mint_zorb_base', 'send_money_yourself'],
     ['mint_opensea_zorb_optimism', 'mint_opensea_zorb_base', None],
