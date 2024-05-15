@@ -55,28 +55,6 @@ class CustomRouter:
         self.address_metadata = address_metadata
         self.address_wallet = address_wallet
 
-    def merkly_refuel(self):
-        merkl = Merkly(self.private_key, CHAIN_FROM_MERKLY, CHAIN_TO_MERKLY, self.str_number, self.proxy)
-        merkl.refuel()
-
-    def zerius_refuel(self):
-        zer = Zerius(self.private_key, CHAIN_FROM_ZERIUS, CHAIN_TO_ZERIUS, self.str_number, self.proxy)
-        zer.refuel()
-
-    def mint_bridge_nft_zerius(self):
-        zer = Zerius(self.private_key, Zora, CHAIN_TO_BRIDGE_ZERIUS, self.str_number, self.proxy)
-        zer.mint_nft()
-        sleeping(TIME_ACCOUNT_DELAY[0], TIME_ACCOUNT_DELAY[1])
-        nft_id = zer.get_nft_id()
-        zer.bridge_nft(nft_id)
-
-    def mint_bridge_nft_l2pass(self):
-        l2 = L2Pass(self.private_key, Zora, CHAIN_TO_BRIDGE_ZERIUS, self.str_number, self.proxy)
-        l2.mint_nft()
-        sleeping(TIME_ACCOUNT_DELAY[0], TIME_ACCOUNT_DELAY[1])
-        nft_id = l2.get_nft_id()
-        l2.bridge_nft(nft_id)
-
     def mint_zorb_zora(self):
         number_trans = random.randint(NUMBER_TRANS_6[0], NUMBER_TRANS_6[1])
         logger.info(f'Number of transactions - {number_trans}\n')
