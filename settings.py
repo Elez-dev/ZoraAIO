@@ -134,10 +134,6 @@ TIME_DELAY_ROUTES = [100, 120]                       # [min, max] Задержк
 
 
 #           Список доступных модулей
-#           'merkly_refuel',                        - Merkly refuel
-#           'zerius_refuel',                        - Zerius refuel
-#           'mint_bridge_nft_zerius'                - Mint NFT Zerius + bridge
-#           'mint_bridge_nft_l2pass'                - Mint NFT L2PASS + bridge
 #           'mint_zorb_zora'                        - Mint PYTHON ZORB в сети ZORA        (С официальной комиссией ZORA 0.000777 ETH)
 #           'mint_zorb_base'                        - Mint PYTHON ZORB в сети BASE        (С официальной комиссией ZORA 0.000777 ETH)
 #           'mint_zorb_optimism'                    - Mint PYTHON ZORB в сети OPTIMISM    (С официальной комиссией ZORA 0.000777 ETH)
