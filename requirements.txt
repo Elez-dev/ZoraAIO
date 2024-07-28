@@ -2,7 +2,7 @@ pandas==2.1.4
 loguru==0.7.2
 tqdm==4.66.3
 web3==6.13.0
-requests==2.31.0
+requests==2.32.2
 openpyxl==3.1.2
 msoffcrypto-tool==5.1.1
 mimesis==14.0.0
