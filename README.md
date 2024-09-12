@@ -65,15 +65,15 @@ python3.10 main.py
 
 11 - BUY + SOLD TOKEN
 
-12 - MINT NFT в сети ZORA             (С официальной комиссией ZORA 0.000777 ETH)
+12 - MINT NFT в сети ZORA             (С официальной комиссией ZORA 0.000111 ETH)
 
-13 - MINT NFT в сети BASE             (С официальной комиссией ZORA 0.000777 ETH)
+13 - MINT NFT в сети BASE             (С официальной комиссией ZORA 0.000111 ETH)
 
-14 - MINT NFT в сети OPTIMISM         (С официальной комиссией ZORA 0.000777 ETH)
+14 - MINT NFT в сети OPTIMISM         (С официальной комиссией ZORA 0.000111 ETH)
 
-15 - MINT NFT в сети BLAST            (С официальной комиссией ZORA 0.000777 ETH)
+15 - MINT NFT в сети BLAST            (С официальной комиссией ZORA 0.000111 ETH)
 
-16 - MINT NFT в сети ARBITRUM         (С официальной комиссией ZORA 0.000777 ETH)
+16 - MINT NFT в сети ARBITRUM         (С официальной комиссией ZORA 0.000111 ETH)
 
 17 - MINT NFT OPENSEA в сети ZORA     (FREE MINT)
 
