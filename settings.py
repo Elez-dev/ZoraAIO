@@ -53,18 +53,6 @@ CHAIN_FROM_MERKLY = Optimism                        # Из какой сети
 CHAIN_TO_MERKLY   = Zora                            # В какую сеть
 VALUE_MERKLY      = [0.0015, 0.0035, 4]             # Количество [min, max, round_decimal]
 
-# 4 - 6 || Zerius -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-# Список доступных сетей: Arbitrum, Optimism, Polygon, Base, Zora
-
-CHAIN_FROM_ZERIUS = Optimism                        # Из какой сети
-CHAIN_TO_ZERIUS   = Zora                            # В какую сеть
-VALUE_ZERIUS = [0.002, 0.004, 4]                    # Количество [min, max, round_decimal]
-
-CHAIN_TO_BRIDGE_ZERIUS = Base                       # В какую сеть бридж NFT
-
-# 7 - 8 || L2PASS -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-CHAIN_TO_BRIDGE_L2 = Base                           # В какую сеть бридж NFT
 
 # 9 - 10 Wrap unwrap ETH -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -137,7 +125,6 @@ TIME_DELAY_ROUTES = [100, 120]                       # [min, max] Задержк
 #           'mint_zorb_zora'                        - Mint PYTHON ZORB в сети ZORA        (С официальной комиссией ZORA 0.000777 ETH)
 #           'mint_zorb_base'                        - Mint PYTHON ZORB в сети BASE        (С официальной комиссией ZORA 0.000777 ETH)
 #           'mint_zorb_optimism'                    - Mint PYTHON ZORB в сети OPTIMISM    (С официальной комиссией ZORA 0.000777 ETH)
-#           'mint_zorb_blast'                       - Mint PYTHON ZORB в сети Blast       (С официальной комиссией ZORA 0.000777 ETH)
 #           'mint_zorb_arbitrum'                    - Mint THE AMBASSADOR в сети Arbitrum (С официальной комиссией ZORA 0.000777 ETH)
 #           'mint_opensea_zorb_zora'                - Mint PYTHON ZORB через OpenSea в сети ZORA     (FREE MINT)
 #           'mint_opensea_zorb_base'                - Mint PYTHON ZORB через OpenSea в сети BASE     (FREE MINT)
