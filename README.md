@@ -33,7 +33,7 @@
 ```
 git clone https://github.com/Elez-dev/ZoraAIO.git
 
-cd ZoraAIO-master
+cd ZoraAIO
 
 pip3.10 install -r requirements.txt
 
@@ -49,16 +49,6 @@ python3.10 main.py
 
 3  - MERKLY GAS
 
-4  - ZERIUS GAS
-
-5  - MINT NFT ZERIUS
-
-6  - BRIDGE NFT ZERIUS
-
-7  - MINT NFT L2PASS
-
-8  - BRIDGE NFT L2PASS
-
 9  - WRAP ETH
 
 10 - UNWRAP ETH
@@ -70,8 +60,6 @@ python3.10 main.py
 13 - MINT NFT в сети BASE             (С официальной комиссией ZORA 0.000777 ETH)
 
 14 - MINT NFT в сети OPTIMISM         (С официальной комиссией ZORA 0.000777 ETH)
-
-15 - MINT NFT в сети BLAST            (С официальной комиссией ZORA 0.000777 ETH)
 
 16 - MINT NFT в сети ARBITRUM         (С официальной комиссией ZORA 0.000777 ETH)
 
